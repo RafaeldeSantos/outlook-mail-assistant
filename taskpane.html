@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mail Assistent</title>
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 13px;
+      color: #333;
+      background: #fafafa;
+      padding: 12px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    h2 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #0078d4;
+    }
+    .mail-preview {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 10px;
+      max-height: 120px;
+      overflow-y: auto;
+      font-size: 12px;
+      color: #555;
+      line-height: 1.4;
+    }
+    .mail-preview .from {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 4px;
+    }
+    .mail-preview .subject {
+      font-weight: 600;
+      color: #0078d4;
+      margin-bottom: 6px;
+    }
+    label {
+      font-weight: 600;
+      font-size: 12px;
+      margin-bottom: 4px;
+      display: block;
+      color: #444;
+    }
+    .tone-select {
+      width: 100%;
+      padding: 6px 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 13px;
+      margin-bottom: 10px;
+      background: #fff;
+    }
+    textarea {
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 13px;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 60px;
+      margin-bottom: 10px;
+    }
+    textarea:focus, .tone-select:focus {
+      outline: none;
+      border-color: #0078d4;
+      box-shadow: 0 0 0 2px rgba(0,120,212,0.15);
+    }
+    .btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 6px;
+      transition: background 0.15s;
+    }
+    .btn-primary {
+      background: #0078d4;
+      color: #fff;
+    }
+    .btn-primary:hover { background: #106ebe; }
+    .btn-primary:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .btn-success {
+      background: #107c10;
+      color: #fff;
+    }
+    .btn-success:hover { background: #0b6a0b; }
+    .btn-outline {
+      background: #fff;
+      color: #333;
+      border: 1px solid #ccc;
+    }
+    .btn-outline:hover { background: #f0f0f0; }
+    .result-box {
+      flex: 1;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 10px;
+      overflow-y: auto;
+      font-size: 13px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      display: none;
+    }
+    .result-box.visible { display: block; }
+    .result-box[contenteditable="true"]:focus {
+      outline: none;
+      border-color: #0078d4;
+    }
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid #fff;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .status {
+      font-size: 11px;
+      color: #107c10;
+      margin-bottom: 6px;
+      display: none;
+    }
+    .status.visible { display: block; }
+    .status.error { color: #d13438; }
+    .actions { display: none; }
+    .actions.visible { display: flex; gap: 6px; }
+    .actions .btn { flex: 1; }
+    .settings-link {
+      font-size: 11px;
+      color: #0078d4;
+      text-decoration: none;
+      cursor: pointer;
+      margin-top: auto;
+      text-align: center;
+      padding-top: 8px;
+    }
+    .settings-panel {
+      display: none;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .settings-panel.visible { display: block; }
+    .settings-panel input {
+      width: 100%;
+      padding: 6px 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: monospace;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Mail Assistent</h2>
+
+  <div class="mail-preview" id="mailPreview">
+    <div class="from" id="mailFrom">Lade Mail...</div>
+    <div class="subject" id="mailSubject"></div>
+    <div id="mailBody"></div>
+  </div>
+
+  <label for="tone">Tonfall</label>
+  <select class="tone-select" id="tone">
+    <option value="locker">Locker & direkt (Du)</option>
+    <option value="formell">Formell (Sie)</option>
+    <option value="kurz">Ultra-kurz</option>
+  </select>
+
+  <label for="keywords">Stichworte</label>
+  <textarea id="keywords" placeholder="z.B. zusagen, naechste Woche Dienstag, freue mich"></textarea>
+
+  <button class="btn btn-primary" id="generateBtn" onclick="generateReply()">
+    Antwort generieren
+  </button>
+
+  <div class="status" id="status"></div>
+
+  <div class="result-box" id="resultBox" contenteditable="true"></div>
+
+  <div class="actions" id="actions">
+    <button class="btn btn-success" onclick="insertReply()">In Mail einfuegen</button>
+    <button class="btn btn-outline" onclick="regenerate()">Nochmal</button>
+  </div>
+
+  <div class="settings-panel" id="settingsPanel">
+    <label for="apiKey">Claude API Key</label>
+    <input type="password" id="apiKey" placeholder="sk-ant-..."/>
+    <button class="btn btn-primary" onclick="saveApiKey()">Speichern</button>
+  </div>
+
+  <a class="settings-link" onclick="toggleSettings()">Einstellungen</a>
+
+  <script>
+    let mailData = { from: '', subject: '', body: '' };
+
+    Office.onReady(function(info) {
+      if (info.host === Office.HostType.Outlook) {
+        loadMail();
+      }
+    });
+
+    function loadMail() {
+      try {
+        const item = Office.context.mailbox.item;
+        mailData.from = item.from ? item.from.displayName : 'Unbekannt';
+        mailData.subject = item.subject || '(Kein Betreff)';
+
+        document.getElementById('mailFrom').textContent = 'Von: ' + mailData.from;
+        document.getElementById('mailSubject').textContent = mailData.subject;
+
+        item.body.getAsync(Office.CoercionType.Text, function(result) {
+          if (result.status === Office.AsyncResultStatus.Succeeded) {
+            mailData.body = result.value.substring(0, 2000);
+            document.getElementById('mailBody').textContent =
+              mailData.body.substring(0, 300) + (mailData.body.length > 300 ? '...' : '');
+          }
+        });
+      } catch (e) {
+        document.getElementById('mailFrom').textContent = 'Mail konnte nicht geladen werden';
+      }
+    }
+
+    function getApiKey() {
+      let key = localStorage.getItem('claude_api_key') || '';
+      if (!key) {
+        showStatus('Bitte API Key in den Einstellungen hinterlegen.', true);
+        toggleSettings();
+        return null;
+      }
+      return key;
+    }
+
+    function saveApiKey() {
+      const key = document.getElementById('apiKey').value.trim();
+      if (key) {
+        localStorage.setItem('claude_api_key', key);
+        showStatus('API Key gespeichert!', false);
+        document.getElementById('settingsPanel').classList.remove('visible');
+      }
+    }
+
+    function toggleSettings() {
+      const panel = document.getElementById('settingsPanel');
+      panel.classList.toggle('visible');
+      const stored = localStorage.getItem('claude_api_key') || '';
+      if (stored) {
+        document.getElementById('apiKey').value = stored;
+      }
+    }
+
+    async function generateReply() {
+      const apiKey = getApiKey();
+      if (!apiKey) return;
+
+      const keywords = document.getElementById('keywords').value.trim();
+      if (!keywords) {
+        showStatus('Bitte Stichworte eingeben.', true);
+        return;
+      }
+
+      const tone = document.getElementById('tone').value;
+      const toneDesc = {
+        'locker': 'Locker und direkt, Du-Form. Kurze Saetze, auf den Punkt.',
+        'formell': 'Formell und professionell, Sie-Form. Hoeflich aber nicht steif.',
+        'kurz': 'Ultra-kurz, maximal 2-3 Saetze. Direkt und knapp.'
+      };
+
+      const btn = document.getElementById('generateBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Generiere...';
+      hideStatus();
+
+      const prompt = `Du bist ein E-Mail-Assistent fuer Rafael Groener von LSJ Advisory (M&A Beratung).
+Schreibe eine Antwort auf die folgende E-Mail. Orientiere dich am Schreibstil: ${toneDesc[tone]}
+
+Urspruengliche Mail von ${mailData.from}:
+Betreff: ${mailData.subject}
+${mailData.body}
+
+Rafaels Stichworte fuer die Antwort: ${keywords}
+
+Regeln:
+- Schreibe NUR den Antworttext, keine Betreffzeile, kein "Antwort:" davor
+- Beginne mit einer passenden Anrede
+- Ende mit "Beste Gruesse" oder "VG" (je nach Tonfall) und "Rafael"
+- Halte dich strikt an die Stichworte, erfinde nichts dazu
+- Kein Geschwafel, direkt auf den Punkt`;
+
+      try {
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': apiKey,
+            'anthropic-version': '2023-06-01',
+            'anthropic-dangerous-direct-browser-access': 'true'
+          },
+          body: JSON.stringify({
+            model: 'claude-haiku-4-5-20251001',
+            max_tokens: 1024,
+            messages: [{
+              role: 'user',
+              content: prompt
+            }]
+          })
+        });
+
+        if (!response.ok) {
+          const err = await response.json();
+          throw new Error(err.error?.message || 'API Fehler: ' + response.status);
+        }
+
+        const data = await response.json();
+        const reply = data.content[0].text;
+
+        document.getElementById('resultBox').textContent = reply;
+        document.getElementById('resultBox').classList.add('visible');
+        document.getElementById('actions').classList.add('visible');
+        showStatus('Antwort generiert — du kannst den Text oben noch bearbeiten.', false);
+
+      } catch (e) {
+        showStatus('Fehler: ' + e.message, true);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'Antwort generieren';
+      }
+    }
+
+    function regenerate() {
+      generateReply();
+    }
+
+    function insertReply() {
+      const reply = document.getElementById('resultBox').textContent;
+
+      try {
+        Office.context.mailbox.item.displayReplyForm(reply);
+        showStatus('In Antwort eingefuegt!', false);
+      } catch (e) {
+        navigator.clipboard.writeText(reply).then(function() {
+          showStatus('In Zwischenablage kopiert — Strg+V in der Antwort.', false);
+        });
+      }
+    }
+
+    function showStatus(msg, isError) {
+      const el = document.getElementById('status');
+      el.textContent = msg;
+      el.className = 'status visible' + (isError ? ' error' : '');
+    }
+
+    function hideStatus() {
+      document.getElementById('status').className = 'status';
+    }
+  </script>
+</body>
+</html>
