@@ -181,6 +181,13 @@
 <body>
   <h2>Mail Assistent</h2>
 
+  <div class="settings-panel" id="settingsPanel">
+    <label for="apiKey">Claude API Key</label>
+    <input type="password" id="apiKey" placeholder="sk-ant-..."/>
+    <button class="btn btn-primary" onclick="saveApiKey()">Speichern</button>
+  </div>
+  <button class="btn btn-outline" onclick="toggleSettings()" style="margin-bottom:10px; font-size:12px;">API Key eingeben / aendern</button>
+
   <div class="mail-preview" id="mailPreview">
     <div class="from" id="mailFrom">Lade Mail...</div>
     <div class="subject" id="mailSubject"></div>
@@ -210,13 +217,6 @@
     <button class="btn btn-outline" onclick="regenerate()">Nochmal</button>
   </div>
 
-  <div class="settings-panel" id="settingsPanel">
-    <label for="apiKey">Claude API Key</label>
-    <input type="password" id="apiKey" placeholder="sk-ant-..."/>
-    <button class="btn btn-primary" onclick="saveApiKey()">Speichern</button>
-  </div>
-
-  <a class="settings-link" onclick="toggleSettings()">Einstellungen</a>
 
   <script>
     let mailData = { from: '', subject: '', body: '' };
