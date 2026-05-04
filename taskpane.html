@@ -66,11 +66,44 @@
       border: 1px solid #ccc;
       border-radius: 6px;
       padding: 8px;
+      padding-right: 38px;
       font-size: 13px;
       font-family: inherit;
       resize: vertical;
       min-height: 60px;
       margin-bottom: 10px;
+    }
+    .mic-wrapper {
+      position: relative;
+      width: 100%;
+    }
+    .mic-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      background: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      padding: 0;
+      transition: all 0.15s;
+    }
+    .mic-btn:hover { background: #f0f0f0; }
+    .mic-btn.recording {
+      background: #d13438;
+      border-color: #d13438;
+      color: #fff;
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(209,52,56,0.5); }
+      50% { box-shadow: 0 0 0 6px rgba(209,52,56,0); }
     }
     textarea:focus, .tone-select:focus {
       outline: none;
@@ -204,7 +237,10 @@
   </select>
 
   <label for="keywords">Stichworte</label>
-  <textarea id="keywords" placeholder="z.B. zusagen, naechste Woche Dienstag, freue mich"></textarea>
+  <div class="mic-wrapper">
+    <textarea id="keywords" placeholder="z.B. zusagen, naechste Woche Dienstag, freue mich (oder Mikro klicken zum Diktieren)"></textarea>
+    <button class="mic-btn" id="micBtn" type="button" onclick="toggleMic()" title="Diktieren">&#127908;</button>
+  </div>
 
   <button class="btn btn-primary" id="generateBtn" onclick="generateReply()">
     Antwort generieren
@@ -222,12 +258,94 @@
 
   <script>
     let mailData = { from: '', subject: '', body: '' };
+    let recognition = null;
+    let isRecording = false;
 
     Office.onReady(function(info) {
       if (info.host === Office.HostType.Outlook) {
         loadMail();
+        setupSpeechRecognition();
       }
     });
+
+    function setupSpeechRecognition() {
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRec) {
+        // Browser unterstuetzt keine Spracheingabe
+        const btn = document.getElementById('micBtn');
+        if (btn) {
+          btn.disabled = true;
+          btn.title = 'Spracheingabe nicht unterstuetzt';
+          btn.style.opacity = '0.4';
+        }
+        return;
+      }
+      recognition = new SpeechRec();
+      recognition.lang = 'de-DE';
+      recognition.continuous = true;
+      recognition.interimResults = true;
+
+      let finalTranscript = '';
+      let baseText = '';
+
+      recognition.onstart = function() {
+        baseText = document.getElementById('keywords').value;
+        if (baseText && !baseText.endsWith(' ')) baseText += ' ';
+        finalTranscript = '';
+      };
+
+      recognition.onresult = function(event) {
+        let interim = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript;
+          } else {
+            interim += transcript;
+          }
+        }
+        document.getElementById('keywords').value = baseText + finalTranscript + interim;
+      };
+
+      recognition.onerror = function(event) {
+        showStatus('Spracheingabe Fehler: ' + event.error, true);
+        stopMic();
+      };
+
+      recognition.onend = function() {
+        if (isRecording) {
+          // Auto-restart wenn wir noch aufnehmen wollen
+          try { recognition.start(); } catch (e) { stopMic(); }
+        }
+      };
+    }
+
+    function toggleMic() {
+      if (!recognition) return;
+      if (isRecording) {
+        stopMic();
+      } else {
+        startMic();
+      }
+    }
+
+    function startMic() {
+      try {
+        recognition.start();
+        isRecording = true;
+        document.getElementById('micBtn').classList.add('recording');
+        showStatus('Aufnahme laeuft — sprich los, Mikro klicken zum Stoppen.', false);
+      } catch (e) {
+        showStatus('Mikro konnte nicht starten: ' + e.message, true);
+      }
+    }
+
+    function stopMic() {
+      isRecording = false;
+      document.getElementById('micBtn').classList.remove('recording');
+      try { recognition.stop(); } catch (e) {}
+      hideStatus();
+    }
 
     function loadMail() {
       try {
