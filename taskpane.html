@@ -116,7 +116,9 @@
       padding: 10px;
       margin-bottom: 10px;
       overflow-y: auto;
-      font-size: 13px;
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 12pt;
+      color: #000000;
       line-height: 1.5;
       white-space: pre-wrap;
       display: none;
@@ -292,6 +294,11 @@
         'formell': 'Formell und professionell, Sie-Form. Hoeflich aber nicht steif.',
         'kurz': 'Ultra-kurz, maximal 2-3 Saetze. Direkt und knapp.'
       };
+      const signature = {
+        'locker': 'Beste Gruesse,\nRafael',
+        'formell': 'Viele Gruesse,\nRafael Groener',
+        'kurz': 'VG\nRafael'
+      };
 
       const btn = document.getElementById('generateBtn');
       btn.disabled = true;
@@ -309,10 +316,15 @@ Rafaels Stichworte fuer die Antwort: ${keywords}
 
 Regeln:
 - Schreibe NUR den Antworttext, keine Betreffzeile, kein "Antwort:" davor
-- Beginne mit einer passenden Anrede
-- Ende mit "Beste Gruesse" oder "VG" (je nach Tonfall) und "Rafael"
+- Beginne mit einer passenden Anrede in EIGENER Zeile, dann LEERZEILE danach
+- Strukturiere den Hauptteil in 1-3 Absaetzen — zwischen Absaetzen IMMER eine LEERZEILE
 - Halte dich strikt an die Stichworte, erfinde nichts dazu
-- Kein Geschwafel, direkt auf den Punkt`;
+- Kein Geschwafel, direkt auf den Punkt
+- Ende mit GENAU dieser Signatur (LEERZEILE davor, dann genau so):
+
+${signature[tone]}
+
+- Verwende echte Zeilenumbrueche (\\n), KEINE HTML-Tags`;
 
       try {
         const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -358,11 +370,27 @@ Regeln:
       generateReply();
     }
 
+    function escapeHtml(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function textToHtml(text) {
+      // In Absaetze splitten (Trennzeichen: 1+ Leerzeilen)
+      const paragraphs = text.split(/\n\s*\n+/).map(p => p.trim()).filter(p => p);
+      const htmlParas = paragraphs.map(p => {
+        // Innere Zeilenumbrueche zu <br>
+        const inner = p.split('\n').map(line => escapeHtml(line.trim())).join('<br>');
+        return '<p style="margin: 0 0 12pt 0; font-family: Helvetica, Arial, sans-serif; font-size: 12pt; color: #000000;">' + inner + '</p>';
+      }).join('');
+      return '<div style="font-family: Helvetica, Arial, sans-serif; font-size: 12pt; color: #000000;">' + htmlParas + '</div>';
+    }
+
     function insertReply() {
       const reply = document.getElementById('resultBox').textContent;
+      const htmlBody = textToHtml(reply);
 
       try {
-        Office.context.mailbox.item.displayReplyForm(reply);
+        Office.context.mailbox.item.displayReplyForm({ htmlBody: htmlBody });
         showStatus('In Antwort eingefuegt!', false);
       } catch (e) {
         navigator.clipboard.writeText(reply).then(function() {
