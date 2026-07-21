@@ -635,6 +635,11 @@
           + (lang === 'en' ? "Rafael's key points: " : 'Rafaels Stichworte: ') + keywords;
       }
 
+      // Zielsprache EXPLIZIT erzwingen (sonst spiegelt das Modell die Sprache der Originalmail)
+      prompt += (lang === 'en')
+        ? '\n\nIMPORTANT: Write the ENTIRE reply in English, regardless of the language of the original email.'
+        : '\n\nWICHTIG: Schreibe die GESAMTE Antwort auf Deutsch, unabhaengig von der Sprache der Originalmail.';
+
       prompt += '\n\n' + (lang === 'en'
         ? 'Rules:\n- Write ONLY the email body, no subject line, no "Reply:" prefix\n- Start with a suitable salutation on its OWN line, then a BLANK line\n- Structure the body in 1-3 paragraphs with a BLANK line between paragraphs\n- Stick strictly to the key points, do not invent facts\n- No filler, straight to the point\n- End with exactly this closing formula AND the name on the next line (a BLANK line before the closing), and NOTHING after that (no contact block — a signature is added automatically):\n\n'
         : 'Regeln:\n- Schreibe NUR den Mailtext, keine Betreffzeile, kein "Antwort:" davor\n- Beginne mit einer passenden Anrede in EIGENER Zeile, dann LEERZEILE danach\n- Strukturiere den Hauptteil in 1-3 Absaetzen — zwischen Absaetzen IMMER eine LEERZEILE\n- Halte dich strikt an die Stichworte, erfinde nichts dazu\n- Kein Geschwafel, direkt auf den Punkt\n- Ende mit GENAU dieser Grussformel UND dem Namen in der naechsten Zeile (LEERZEILE vor der Grussformel) und NICHTS danach (keine Kontaktdaten — die Signatur wird automatisch angehaengt):\n\n')
