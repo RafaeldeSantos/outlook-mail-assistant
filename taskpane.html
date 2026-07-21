@@ -227,11 +227,21 @@
     <div id="mailBody"></div>
   </div>
 
-  <!-- Kurzantwort / Eingangsbestaetigung -->
-  <label id="quickLabel">Kurzantwort (Eingangsbestaetigung, ~24h)</label>
-  <div class="quick-row">
-    <button class="btn btn-outline" onclick="quickReply('de')">Kurzantwort DE</button>
-    <button class="btn btn-outline" onclick="quickReply('en')">Kurzantwort EN</button>
+  <!-- Schnellantworten (nur beim Antworten sinnvoll) -->
+  <div id="quickSection">
+    <label>Kurzantwort (Eingangsbestätigung, ~24h)</label>
+    <div class="quick-row">
+      <button class="btn btn-outline" onclick="quickReply('de')">Kurzantwort DE</button>
+      <button class="btn btn-outline" onclick="quickReply('en')">Kurzantwort EN</button>
+    </div>
+    <label style="margin-top:10px;">Termin-Schnellantwort (in gewählter Sprache)</label>
+    <div class="quick-row">
+      <button class="btn btn-outline" onclick="schedulingReply('zusage_a')">Zusage 1. Termin</button>
+      <button class="btn btn-outline" onclick="schedulingReply('zusage_b')">Zusage 2. Termin</button>
+    </div>
+    <div class="quick-row" style="margin-top:6px;">
+      <button class="btn btn-outline" onclick="schedulingReply('absage')">Absage / andere Zeit vorschlagen</button>
+    </div>
   </div>
 
   <hr class="divider"/>
@@ -278,6 +288,7 @@
     let recognition = null;
     let isRecording = false;
     let mode = 'read'; // 'read' = Antwort auf Mail, 'compose' = neue Mail
+    let lastPreset = null; // fuer "Nochmal" bei Schnellantworten
 
     Office.onReady(function(info) {
       if (info.host === Office.HostType.Outlook) {
@@ -295,16 +306,14 @@
       if (mode === 'read') {
         document.getElementById('modeBadge').textContent = 'Antwort auf Mail';
         document.getElementById('mailPreview').style.display = '';
-        document.getElementById('quickLabel').style.display = '';
-        document.querySelector('.quick-row').style.display = '';
+        document.getElementById('quickSection').style.display = '';
         document.getElementById('keywordsLabel').textContent = 'Stichworte fuer die Antwort';
         loadMail();
       } else {
         document.getElementById('modeBadge').textContent = 'Neue Mail aus Stichworten';
         document.getElementById('mailPreview').style.display = 'none';
-        // Kurzantwort ergibt nur beim Antworten Sinn
-        document.getElementById('quickLabel').style.display = 'none';
-        document.querySelector('.quick-row').style.display = 'none';
+        // Schnellantworten ergeben nur beim Antworten Sinn
+        document.getElementById('quickSection').style.display = 'none';
         document.getElementById('keywordsLabel').textContent = 'Worum geht es? (Stichworte)';
         document.getElementById('keywords').placeholder = 'z.B. Termin vorschlagen, naechste Woche, kurzes Update Projekt X';
         document.getElementById('generateBtn').textContent = 'Mail verfassen';
@@ -385,24 +394,44 @@
       }
     }
 
+    // Persistenter Speicher: Outlook RoamingSettings ueberlebt Cache-Loeschen und
+    // Neustarts (serverseitig pro Postfach). localStorage ist nur Fallback.
+    function getSetting(name) {
+      try {
+        const v = Office.context.roamingSettings.get(name);
+        if (v !== undefined && v !== null) return v;
+      } catch (e) {}
+      return localStorage.getItem(name) || '';
+    }
+    function setSetting(name, value, cb) {
+      try { localStorage.setItem(name, value); } catch (e) {}
+      try {
+        Office.context.roamingSettings.set(name, value);
+        Office.context.roamingSettings.saveAsync(function() { if (cb) cb(); });
+        return;
+      } catch (e) {}
+      if (cb) cb();
+    }
+
     function getApiKey() {
-      let key = localStorage.getItem('claude_api_key') || '';
+      const key = getSetting('claude_api_key');
       if (!key) { showStatus('Bitte API Key in den Einstellungen hinterlegen.', true); toggleSettings(); return null; }
       return key;
     }
     function saveSettings() {
       const key = document.getElementById('apiKey').value.trim();
       const sig = document.getElementById('signature').value;
-      if (key) { localStorage.setItem('claude_api_key', key); }
-      localStorage.setItem('mail_signature', sig);
-      showStatus('Gespeichert!', false);
-      document.getElementById('settingsPanel').classList.remove('visible');
+      if (key) { setSetting('claude_api_key', key); }
+      setSetting('mail_signature', sig, function() {
+        showStatus('Gespeichert!', false);
+        document.getElementById('settingsPanel').classList.remove('visible');
+      });
     }
     function toggleSettings() {
       const panel = document.getElementById('settingsPanel');
       panel.classList.toggle('visible');
-      document.getElementById('apiKey').value = localStorage.getItem('claude_api_key') || '';
-      document.getElementById('signature').value = localStorage.getItem('mail_signature') || '';
+      document.getElementById('apiKey').value = getSetting('claude_api_key');
+      document.getElementById('signature').value = getSetting('mail_signature');
     }
 
     // --- Kurzantwort / Eingangsbestaetigung (ohne KI) ---
@@ -414,12 +443,25 @@
       showStatus('Kurzantwort eingefuegt — Anrede/Text bei Bedarf anpassen, dann einfuegen.', false);
     }
 
-    async function generateReply() {
+    // Termin-Schnellantworten: Zusage 1./2. Termin oder Absage, in gewaehlter Sprache
+    function schedulingReply(kind) {
+      const presets = {
+        zusage_a: 'Sage dem ERSTEN der in der urspruenglichen Mail vorgeschlagenen Termine bzw. Uhrzeiten verbindlich und freundlich zu und bestaetige ihn. Nenne den konkreten Termin.',
+        zusage_b: 'Sage dem ZWEITEN der in der urspruenglichen Mail vorgeschlagenen Termine bzw. Uhrzeiten verbindlich und freundlich zu und bestaetige ihn. Nenne den konkreten Termin.',
+        absage: 'Teile hoeflich mit, dass die vorgeschlagenen Termine leider nicht passen, und bitte um alternative Terminvorschlaege.'
+      };
+      generateReply(presets[kind]);
+    }
+
+    async function generateReply(presetKeywords) {
       const apiKey = getApiKey();
       if (!apiKey) return;
 
-      const keywords = document.getElementById('keywords').value.trim();
+      const keywords = (presetKeywords !== undefined && presetKeywords !== null)
+        ? presetKeywords
+        : document.getElementById('keywords').value.trim();
       if (!keywords) { showStatus('Bitte Stichworte eingeben.', true); return; }
+      lastPreset = (presetKeywords !== undefined && presetKeywords !== null) ? presetKeywords : null;
 
       const lang = document.getElementById('lang').value;
       const tone = document.getElementById('tone').value;
@@ -502,7 +544,7 @@
       }
     }
 
-    function regenerate() { generateReply(); }
+    function regenerate() { generateReply(lastPreset); }
 
     function showResult(text) {
       const box = document.getElementById('resultBox');
@@ -526,7 +568,7 @@
     }
 
     function signatureHtml() {
-      const sig = localStorage.getItem('mail_signature') || '';
+      const sig = getSetting('mail_signature') || '';
       if (!sig.trim()) return '';
       const style = 'font-family: Helvetica, Arial, sans-serif; font-size: 11pt; color: #000000;';
       const lines = sig.split('\n').map(function(line) { return escapeHtml(line); }).join('<br>');
