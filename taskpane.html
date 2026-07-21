@@ -215,9 +215,11 @@
   <div class="settings-panel" id="settingsPanel">
     <label for="apiKey">Claude API Key</label>
     <input type="password" id="apiKey" placeholder="sk-ant-..."/>
-    <button class="btn btn-primary" onclick="saveApiKey()">Speichern</button>
+    <label for="signature" style="margin-top:8px;">Signatur (wird beim Antworten angehaengt)</label>
+    <textarea id="signature" placeholder="Rafael Groener&#10;Vice President&#10;LSJ Advisory GmbH&#10;..." style="width:100%; min-height:70px; padding:6px 8px; border:1px solid #ccc; border-radius:4px; font-size:12px; font-family:inherit; margin-bottom:8px;"></textarea>
+    <button class="btn btn-primary" onclick="saveSettings()">Speichern</button>
   </div>
-  <button class="btn btn-outline" onclick="toggleSettings()" style="margin-bottom:10px; font-size:12px;">API Key eingeben / aendern</button>
+  <button class="btn btn-outline" onclick="toggleSettings()" style="margin-bottom:10px; font-size:12px;">Einstellungen (Key &amp; Signatur)</button>
 
   <div class="mail-preview" id="mailPreview">
     <div class="from" id="mailFrom">Lade Mail...</div>
@@ -386,19 +388,19 @@
       if (!key) { showStatus('Bitte API Key in den Einstellungen hinterlegen.', true); toggleSettings(); return null; }
       return key;
     }
-    function saveApiKey() {
+    function saveSettings() {
       const key = document.getElementById('apiKey').value.trim();
-      if (key) {
-        localStorage.setItem('claude_api_key', key);
-        showStatus('API Key gespeichert!', false);
-        document.getElementById('settingsPanel').classList.remove('visible');
-      }
+      const sig = document.getElementById('signature').value;
+      if (key) { localStorage.setItem('claude_api_key', key); }
+      localStorage.setItem('mail_signature', sig);
+      showStatus('Gespeichert!', false);
+      document.getElementById('settingsPanel').classList.remove('visible');
     }
     function toggleSettings() {
       const panel = document.getElementById('settingsPanel');
       panel.classList.toggle('visible');
-      const stored = localStorage.getItem('claude_api_key') || '';
-      if (stored) { document.getElementById('apiKey').value = stored; }
+      document.getElementById('apiKey').value = localStorage.getItem('claude_api_key') || '';
+      document.getElementById('signature').value = localStorage.getItem('mail_signature') || '';
     }
 
     // --- Kurzantwort / Eingangsbestaetigung (ohne KI) ---
@@ -521,13 +523,22 @@
       return '<div style="' + style + '">' + htmlParas + '</div>';
     }
 
+    function signatureHtml() {
+      const sig = localStorage.getItem('mail_signature') || '';
+      if (!sig.trim()) return '';
+      const style = 'font-family: Helvetica, Arial, sans-serif; font-size: 11pt; color: #000000;';
+      const lines = sig.split('\n').map(function(line) { return escapeHtml(line); }).join('<br>');
+      return '<p style="margin: 11pt 0 0 0; ' + style + '">' + lines + '</p>';
+    }
+
     function insertReply() {
       const reply = document.getElementById('resultBox').textContent;
-      const htmlBody = textToHtml(reply);
       const item = Office.context.mailbox.item;
 
       if (mode === 'read') {
-        // Lese-Modus: Antwortformular oeffnen. Outlook haengt die gespeicherte Signatur an.
+        // Lese-Modus: displayReplyForm ueberschreibt den Body samt automatischer
+        // Outlook-Signatur. Deshalb haengen wir die im Add-in hinterlegte Signatur selbst an.
+        const htmlBody = textToHtml(reply) + signatureHtml();
         try {
           item.displayReplyForm({ htmlBody: htmlBody });
           showStatus('In Antwort eingefuegt!', false);
@@ -535,7 +546,9 @@
           copyFallback(reply);
         }
       } else {
-        // Compose-Modus: an Cursorposition einfuegen, vorhandene Signatur bleibt erhalten.
+        // Compose-Modus: an Cursorposition einfuegen. Die Outlook-Signatur ist bereits
+        // im Entwurf und bleibt erhalten, daher hier KEINE Signatur anhaengen.
+        const htmlBody = textToHtml(reply);
         item.body.setSelectedDataAsync(htmlBody, { coercionType: Office.CoercionType.Html }, function(res) {
           if (res.status === Office.AsyncResultStatus.Succeeded) {
             showStatus('In Mail eingefuegt!', false);
