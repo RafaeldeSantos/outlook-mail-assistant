@@ -139,6 +139,18 @@
     .btn-outline:hover { background: #f0f0f0; }
     .quick-row { display: flex; gap: 6px; margin-bottom: 12px; }
     .quick-row .btn { margin-bottom: 0; font-size: 12px; padding: 8px; }
+    #suggestions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .chip {
+      border: 1px solid #2E8B8B;
+      color: #1B2A4A;
+      background: #fff;
+      border-radius: 14px;
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .chip:hover { background: #E8F1F1; }
     .divider {
       border: none;
       border-top: 1px solid #e0e0e0;
@@ -234,14 +246,9 @@
       <button class="btn btn-outline" onclick="quickReply('de')">Kurzantwort DE</button>
       <button class="btn btn-outline" onclick="quickReply('en')">Kurzantwort EN</button>
     </div>
-    <label style="margin-top:10px;">Termin-Schnellantwort (in gewählter Sprache)</label>
-    <div class="quick-row">
-      <button class="btn btn-outline" onclick="schedulingReply('zusage_a')">Zusage 1. Termin</button>
-      <button class="btn btn-outline" onclick="schedulingReply('zusage_b')">Zusage 2. Termin</button>
-    </div>
-    <div class="quick-row" style="margin-top:6px;">
-      <button class="btn btn-outline" onclick="schedulingReply('absage')">Absage / andere Zeit vorschlagen</button>
-    </div>
+    <label style="margin-top:10px;">Antwortvorschläge (kontextbezogen, 2-3 Optionen)</label>
+    <button class="btn btn-outline" id="suggestBtn" onclick="suggestReplies()" style="font-size:12px; padding:8px;">Vorschläge laden</button>
+    <div id="suggestions"></div>
   </div>
 
   <hr class="divider"/>
@@ -289,6 +296,7 @@
     let isRecording = false;
     let mode = 'read'; // 'read' = Antwort auf Mail, 'compose' = neue Mail
     let lastPreset = null; // fuer "Nochmal" bei Schnellantworten
+    let suggestions = []; // aktuelle Antwortvorschlaege
 
     Office.onReady(function(info) {
       if (info.host === Office.HostType.Outlook) {
@@ -443,14 +451,97 @@
       showStatus('Kurzantwort eingefuegt — Anrede/Text bei Bedarf anpassen, dann einfuegen.', false);
     }
 
-    // Termin-Schnellantworten: Zusage 1./2. Termin oder Absage, in gewaehlter Sprache
-    function schedulingReply(kind) {
-      const presets = {
-        zusage_a: 'Sage dem ERSTEN der in der urspruenglichen Mail vorgeschlagenen Termine bzw. Uhrzeiten verbindlich und freundlich zu und bestaetige ihn. Nenne den konkreten Termin.',
-        zusage_b: 'Sage dem ZWEITEN der in der urspruenglichen Mail vorgeschlagenen Termine bzw. Uhrzeiten verbindlich und freundlich zu und bestaetige ihn. Nenne den konkreten Termin.',
-        absage: 'Teile hoeflich mit, dass die vorgeschlagenen Termine leider nicht passen, und bitte um alternative Terminvorschlaege.'
+    // Kontextbezogene Antwortvorschlaege (2-3 Chips), die alle sinnvollen
+    // Ausgaenge abdecken. Sprache automatisch = Sprache der Originalmail.
+    async function suggestReplies() {
+      const apiKey = getApiKey();
+      if (!apiKey) return;
+
+      const tone = document.getElementById('tone').value;
+      const toneMap = {
+        formell: 'formal and professional (in German use the polite "Sie" form)',
+        locker: 'casual and direct (in German use the informal "Du" form)',
+        kurz: 'very short and to the point'
       };
-      generateReply(presets[kind]);
+
+      const sbtn = document.getElementById('suggestBtn');
+      const container = document.getElementById('suggestions');
+      container.innerHTML = '';
+      sbtn.disabled = true;
+      sbtn.innerHTML = '<span class="spinner"></span>Lade...';
+      hideStatus();
+
+      const prompt = 'You are an email assistant for Rafael Groener at LSJ Advisory (an M&A boutique). '
+        + 'Read the email below and propose 2-3 SHORT reply options that Rafael could pick with one click.\n'
+        + 'Rules:\n'
+        + '- Reply in the SAME LANGUAGE as the original email (auto-detect it).\n'
+        + '- Cover the DISTINCT plausible outcomes. If the sender offers several dates/times/options, create one reply per option (e.g. confirm the 28th; confirm the 31st) PLUS one decline / propose-another-time option.\n'
+        + '- Tone: ' + toneMap[tone] + '.\n'
+        + '- Each reply: a short salutation, 1-2 sentences, then a closing line matching the language/tone (e.g. "Viele Grüße" / "Best regards"). NO name and NO contact block afterwards — a signature is appended automatically.\n'
+        + '- If the reply is in German, use correct umlauts ü ö ä ß and ß, NEVER ue/oe/ae/ss.\n'
+        + '- Keep each option to at most 3 short sentences.\n\n'
+        + 'Original email from ' + mailData.from + ':\n'
+        + 'Subject: ' + mailData.subject + '\n'
+        + mailData.body + '\n\n'
+        + 'Return ONLY a JSON array, with no prose and no markdown code fences, in exactly this shape:\n'
+        + '[{"label":"3-5 word summary in the reply language for the button","text":"the full short reply, use \\n for line breaks"}]';
+
+      try {
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': apiKey,
+            'anthropic-version': '2023-06-01',
+            'anthropic-dangerous-direct-browser-access': 'true'
+          },
+          body: JSON.stringify({
+            model: 'claude-sonnet-5',
+            max_tokens: 900,
+            messages: [{ role: 'user', content: prompt }]
+          })
+        });
+        if (!response.ok) {
+          const err = await response.json();
+          throw new Error(err.error?.message || 'API Fehler: ' + response.status);
+        }
+        const data = await response.json();
+        let raw = (data.content[0].text || '').trim();
+        // evtl. Markdown-Fences entfernen
+        raw = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim();
+        // erstes JSON-Array herausschneiden, falls doch Text drumherum
+        const start = raw.indexOf('['), end = raw.lastIndexOf(']');
+        if (start >= 0 && end > start) raw = raw.substring(start, end + 1);
+        suggestions = JSON.parse(raw);
+        renderSuggestions();
+      } catch (e) {
+        showStatus('Fehler bei Vorschlaegen: ' + e.message, true);
+      } finally {
+        sbtn.disabled = false;
+        sbtn.textContent = 'Vorschläge neu laden';
+      }
+    }
+
+    function renderSuggestions() {
+      const container = document.getElementById('suggestions');
+      container.innerHTML = '';
+      if (!Array.isArray(suggestions) || !suggestions.length) {
+        showStatus('Keine Vorschlaege erhalten.', true);
+        return;
+      }
+      suggestions.forEach(function(s, i) {
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'chip';
+        chip.textContent = (s && s.label) ? s.label : ('Option ' + (i + 1));
+        chip.title = (s && s.text) ? s.text : '';
+        chip.onclick = function() {
+          showResult((s && s.text) ? s.text : '');
+          showStatus('Vorschlag uebernommen — anpassen und einfuegen.', false);
+        };
+        container.appendChild(chip);
+      });
+      showStatus('Vorschlag anklicken — landet oben, dann einfuegen.', false);
     }
 
     async function generateReply(presetKeywords) {
