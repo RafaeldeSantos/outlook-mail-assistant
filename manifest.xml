@@ -7,7 +7,7 @@
   xsi:type="MailApp">
 
   <Id>a1b2c3d4-e5f6-7890-abcd-ef1234567890</Id>
-  <Version>1.0.0</Version>
+  <Version>1.1.0</Version>
   <ProviderName>LSJ Advisory</ProviderName>
   <DefaultLocale>de-DE</DefaultLocale>
   <DisplayName DefaultValue="Mail Assistent"/>
@@ -75,6 +75,28 @@
               </Group>
             </OfficeTab>
           </ExtensionPoint>
+          <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+            <OfficeTab id="TabDefaultCompose">
+              <Group id="msgComposeGroup">
+                <Label resid="groupLabel"/>
+                <Control xsi:type="Button" id="taskPaneBtnCompose">
+                  <Label resid="btnLabelCompose"/>
+                  <Supertip>
+                    <Title resid="btnLabelCompose"/>
+                    <Description resid="btnDescCompose"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="icon16"/>
+                    <bt:Image size="32" resid="icon32"/>
+                    <bt:Image size="80" resid="icon80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="taskPaneUrl"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
         </DesktopFormFactor>
       </Host>
     </Hosts>
@@ -91,9 +113,11 @@
       <bt:ShortStrings>
         <bt:String id="groupLabel" DefaultValue="Mail Assistent"/>
         <bt:String id="btnLabel" DefaultValue="Antwort generieren"/>
+        <bt:String id="btnLabelCompose" DefaultValue="Mail verfassen"/>
       </bt:ShortStrings>
       <bt:LongStrings>
         <bt:String id="btnDesc" DefaultValue="Oeffnet den KI Mail-Assistenten zum schnellen Beantworten von Mails"/>
+        <bt:String id="btnDescCompose" DefaultValue="Oeffnet den KI Mail-Assistenten zum Verfassen neuer Mails aus Stichworten"/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
