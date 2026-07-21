@@ -7,7 +7,7 @@
   xsi:type="MailApp">
 
   <Id>a1b2c3d4-e5f6-7890-abcd-ef1234567890</Id>
-  <Version>1.1.0</Version>
+  <Version>1.2.0</Version>
   <ProviderName>LSJ Advisory</ProviderName>
   <DefaultLocale>de-DE</DefaultLocale>
   <DisplayName DefaultValue="Mail Assistent"/>
@@ -80,6 +80,50 @@
               <Group id="msgComposeGroup">
                 <Label resid="groupLabel"/>
                 <Control xsi:type="Button" id="taskPaneBtnCompose">
+                  <Label resid="btnLabelCompose"/>
+                  <Supertip>
+                    <Title resid="btnLabelCompose"/>
+                    <Description resid="btnDescCompose"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="icon16"/>
+                    <bt:Image size="32" resid="icon32"/>
+                    <bt:Image size="80" resid="icon80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="taskPaneUrl"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+          <ExtensionPoint xsi:type="AppointmentAttendeeCommandSurface">
+            <OfficeTab id="TabDefaultApptRead">
+              <Group id="apptReadGroup">
+                <Label resid="groupLabel"/>
+                <Control xsi:type="Button" id="taskPaneBtnApptRead">
+                  <Label resid="btnLabel"/>
+                  <Supertip>
+                    <Title resid="btnLabel"/>
+                    <Description resid="btnDesc"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="icon16"/>
+                    <bt:Image size="32" resid="icon32"/>
+                    <bt:Image size="80" resid="icon80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="taskPaneUrl"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+          <ExtensionPoint xsi:type="AppointmentOrganizerCommandSurface">
+            <OfficeTab id="TabDefaultApptCompose">
+              <Group id="apptComposeGroup">
+                <Label resid="groupLabel"/>
+                <Control xsi:type="Button" id="taskPaneBtnApptCompose">
                   <Label resid="btnLabelCompose"/>
                   <Supertip>
                     <Title resid="btnLabelCompose"/>

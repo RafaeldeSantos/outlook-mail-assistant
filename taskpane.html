@@ -367,7 +367,9 @@
     function loadMail() {
       try {
         const item = Office.context.mailbox.item;
-        mailData.from = item.from ? item.from.displayName : 'Unbekannt';
+        // Mails haben .from, Termine haben .organizer
+        const sender = item.from || item.organizer;
+        mailData.from = sender ? sender.displayName : 'Unbekannt';
         mailData.subject = item.subject || '(Kein Betreff)';
         document.getElementById('mailFrom').textContent = 'Von: ' + mailData.from;
         document.getElementById('mailSubject').textContent = mailData.subject;
