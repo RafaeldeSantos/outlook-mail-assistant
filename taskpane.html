@@ -483,8 +483,7 @@
         + 'Original email from ' + mailData.from + ':\n'
         + 'Subject: ' + mailData.subject + '\n'
         + mailData.body + '\n\n'
-        + 'Return ONLY a JSON array, with no prose and no markdown code fences, in exactly this shape:\n'
-        + '[{"label":"3-5 word summary in the reply language for the button","text":"the full short reply, use \\n for line breaks"}]';
+        + 'Return a JSON object with an "options" array of 2-3 items. Each item has "label" (a 3-5 word summary in the reply language, for the button) and "text" (the full short reply; use \\n for line breaks). Keep each "text" short so the whole JSON stays compact.';
 
       try {
         const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -497,7 +496,28 @@
           },
           body: JSON.stringify({
             model: 'claude-sonnet-5',
-            max_tokens: 900,
+            max_tokens: 2000,
+            output_config: {
+              format: {
+                type: 'json_schema',
+                schema: {
+                  type: 'object',
+                  properties: {
+                    options: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: { label: { type: 'string' }, text: { type: 'string' } },
+                        required: ['label', 'text'],
+                        additionalProperties: false
+                      }
+                    }
+                  },
+                  required: ['options'],
+                  additionalProperties: false
+                }
+              }
+            },
             messages: [{ role: 'user', content: prompt }]
           })
         });
@@ -506,13 +526,19 @@
           throw new Error(err.error?.message || 'API Fehler: ' + response.status);
         }
         const data = await response.json();
-        let raw = (data.content[0].text || '').trim();
-        // evtl. Markdown-Fences entfernen
+        let raw = (data.content[0] && data.content[0].text ? data.content[0].text : '').trim();
         raw = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim();
-        // erstes JSON-Array herausschneiden, falls doch Text drumherum
-        const start = raw.indexOf('['), end = raw.lastIndexOf(']');
-        if (start >= 0 && end > start) raw = raw.substring(start, end + 1);
-        suggestions = JSON.parse(raw);
+        let parsed;
+        try {
+          parsed = JSON.parse(raw);
+        } catch (pe) {
+          // Fallback: JSON-Objekt oder -Array aus umgebendem Text schneiden
+          let s = raw.indexOf('{'), e = raw.lastIndexOf('}');
+          if (s < 0) { s = raw.indexOf('['); e = raw.lastIndexOf(']'); }
+          if (s >= 0 && e > s) parsed = JSON.parse(raw.substring(s, e + 1));
+          else throw pe;
+        }
+        suggestions = Array.isArray(parsed) ? parsed : (parsed.options || []);
         renderSuggestions();
       } catch (e) {
         showStatus('Fehler bei Vorschlaegen: ' + e.message, true);
