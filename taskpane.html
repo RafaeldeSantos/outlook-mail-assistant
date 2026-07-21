@@ -445,8 +445,8 @@
     // --- Kurzantwort / Eingangsbestaetigung (ohne KI) ---
     function quickReply(lang) {
       const text = lang === 'en'
-        ? 'Hello,\n\nthank you for your message. We are reviewing it and will get back to you shortly.\n\nKind regards'
-        : 'Guten Tag,\n\nvielen Dank für Ihre Nachricht. Wir schauen uns das an und melden uns in Kürze bei Ihnen.\n\nViele Grüße';
+        ? 'Hello,\n\nthank you for your message. We are reviewing it and will get back to you shortly.\n\nKind regards\nRafael Groener'
+        : 'Guten Tag,\n\nvielen Dank für Ihre Nachricht. Wir schauen uns das an und melden uns in Kürze bei Ihnen.\n\nViele Grüße\nRafael Groener';
       showResult(text);
       showStatus('Kurzantwort eingefuegt — Anrede/Text bei Bedarf anpassen, dann einfuegen.', false);
     }
@@ -468,6 +468,8 @@
         locker: 'If the reply is in German, use the informal "du" form.',
         kurz: 'If the reply is in German, use the polite "Sie" form.'
       };
+      // Name unter dem Gruss: du -> Vorname, Sie -> voller Name
+      const closeName = { formell: 'Rafael Groener', locker: 'Rafael', kurz: 'Rafael Groener' };
 
       const sbtn = document.getElementById('suggestBtn');
       const container = document.getElementById('suggestions');
@@ -482,7 +484,8 @@
         + '- Reply in the SAME LANGUAGE as the original email (auto-detect it).\n'
         + '- Cover the DISTINCT plausible outcomes. If the sender offers several dates/times/options, create one reply per option (e.g. confirm the 28th; confirm the 31st) PLUS one decline / propose-another-time option.\n'
         + '- Tone: ' + toneMap[tone] + '. ' + addressForm[tone] + ' Use the SAME form of address CONSISTENTLY across ALL options and within each reply — NEVER mix "Sie" and "du". Do not mirror the senders form of address; follow the instructed one.\n'
-        + '- Each reply: a short salutation, 1-2 sentences, then a closing line matching the language/tone (e.g. "Viele Grüße" / "Best regards"). NO name and NO contact block afterwards — a signature is appended automatically.\n'
+        + '- Structure EVERY reply with real paragraph breaks: salutation on its own line, then a BLANK line, then the message (1-2 sentences), then a BLANK line, then the closing formula (e.g. "Viele Grüße" / "Best regards") and on the NEXT line the name "' + closeName[tone] + '". In the JSON "text", a blank line is \\n\\n and a single line break is \\n.\n'
+        + '- Do NOT add any contact block or company footer after the name — a signature is appended automatically.\n'
         + '- If the reply is in German, use correct umlauts ü ö ä ß and ß, NEVER ue/oe/ae/ss.\n'
         + '- Keep each option to at most 3 short sentences.\n\n'
         + 'Original email from ' + mailData.from + ':\n'
@@ -600,9 +603,10 @@
           kurz: 'Ultra-short, max 2-3 sentences. Direct and concise.'
         }
       };
+      // Gruss + Name: du -> Vorname, Sie -> voller Name
       const closing = {
-        de: { formell: 'Viele Grüße', locker: 'Beste Grüße', kurz: 'VG' },
-        en: { formell: 'Kind regards', locker: 'Best', kurz: 'Best' }
+        de: { formell: 'Viele Grüße\nRafael Groener', locker: 'Beste Grüße\nRafael', kurz: 'VG\nRafael Groener' },
+        en: { formell: 'Kind regards\nRafael Groener', locker: 'Best\nRafael', kurz: 'Best\nRafael Groener' }
       };
 
       const btn = document.getElementById('generateBtn');
@@ -629,8 +633,8 @@
       }
 
       prompt += '\n\n' + (lang === 'en'
-        ? 'Rules:\n- Write ONLY the email body, no subject line, no "Reply:" prefix\n- Start with a suitable salutation on its OWN line, then a BLANK line\n- Structure the body in 1-3 paragraphs with a BLANK line between paragraphs\n- Stick strictly to the key points, do not invent facts\n- No filler, straight to the point\n- End with exactly this closing line (BLANK line before it), and NOTHING after it (no name, no contact details — the signature is added automatically):\n\n'
-        : 'Regeln:\n- Schreibe NUR den Mailtext, keine Betreffzeile, kein "Antwort:" davor\n- Beginne mit einer passenden Anrede in EIGENER Zeile, dann LEERZEILE danach\n- Strukturiere den Hauptteil in 1-3 Absaetzen — zwischen Absaetzen IMMER eine LEERZEILE\n- Halte dich strikt an die Stichworte, erfinde nichts dazu\n- Kein Geschwafel, direkt auf den Punkt\n- Ende mit GENAU dieser Grussformel (LEERZEILE davor) und NICHTS danach (kein Name, keine Kontaktdaten — die Signatur wird automatisch angehaengt):\n\n')
+        ? 'Rules:\n- Write ONLY the email body, no subject line, no "Reply:" prefix\n- Start with a suitable salutation on its OWN line, then a BLANK line\n- Structure the body in 1-3 paragraphs with a BLANK line between paragraphs\n- Stick strictly to the key points, do not invent facts\n- No filler, straight to the point\n- End with exactly this closing formula AND the name on the next line (a BLANK line before the closing), and NOTHING after that (no contact block — a signature is added automatically):\n\n'
+        : 'Regeln:\n- Schreibe NUR den Mailtext, keine Betreffzeile, kein "Antwort:" davor\n- Beginne mit einer passenden Anrede in EIGENER Zeile, dann LEERZEILE danach\n- Strukturiere den Hauptteil in 1-3 Absaetzen — zwischen Absaetzen IMMER eine LEERZEILE\n- Halte dich strikt an die Stichworte, erfinde nichts dazu\n- Kein Geschwafel, direkt auf den Punkt\n- Ende mit GENAU dieser Grussformel UND dem Namen in der naechsten Zeile (LEERZEILE vor der Grussformel) und NICHTS danach (keine Kontaktdaten — die Signatur wird automatisch angehaengt):\n\n')
         + closing[lang][tone]
         + '\n\n' + (lang === 'en'
           ? '- Use real line breaks, NO HTML tags'
