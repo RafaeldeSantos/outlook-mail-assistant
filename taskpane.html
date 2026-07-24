@@ -514,6 +514,7 @@
           body: JSON.stringify({
             model: 'claude-sonnet-5',
             max_tokens: 2000,
+            thinking: { type: 'disabled' },
             output_config: {
               format: {
                 type: 'json_schema',
@@ -543,7 +544,9 @@
           throw new Error(err.error?.message || 'API Fehler: ' + response.status);
         }
         const data = await response.json();
-        let raw = (data.content[0] && data.content[0].text ? data.content[0].text : '').trim();
+        // Robust: ersten Text-Block nehmen (content[0] koennte ein Thinking-Block sein)
+        const tb = (data.content || []).find(function(b) { return b.type === 'text'; });
+        let raw = (tb && tb.text ? tb.text : '').trim();
         raw = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim();
         let parsed;
         try {
@@ -678,6 +681,7 @@
           body: JSON.stringify({
             model: 'claude-sonnet-5',
             max_tokens: 1024,
+            thinking: { type: 'disabled' },
             messages: [{ role: 'user', content: prompt }]
           })
         });
@@ -686,7 +690,11 @@
           throw new Error(err.error?.message || 'API Fehler: ' + response.status);
         }
         const data = await response.json();
-        showResult(data.content[0].text);
+        // Robust: ersten Text-Block nehmen (nicht content[0], das koennte ein Thinking-Block sein)
+        const textBlock = (data.content || []).find(function(b) { return b.type === 'text'; });
+        const reply = textBlock ? textBlock.text : '';
+        if (!reply) { showStatus('Leere Antwort erhalten — bitte nochmal versuchen.', true); return; }
+        showResult(reply);
         showStatus(lang === 'en' ? 'Reply generated — you can still edit the text above.' : 'Antwort generiert — du kannst den Text oben noch bearbeiten.', false);
       } catch (e) {
         showStatus('Fehler: ' + e.message, true);
