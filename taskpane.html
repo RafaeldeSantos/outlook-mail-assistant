@@ -475,14 +475,8 @@
         locker: 'casual and direct',
         kurz: 'very short and to the point'
       };
-      const addressForm = {
-        formell: 'If the reply is in German, use the polite "Sie" form.',
-        locker: 'If the reply is in German, use the informal "du" form.',
-        kurz: 'If the reply is in German, use the polite "Sie" form.'
-      };
-      // Name unter dem Gruss: du -> Vorname, Sie -> voller Name
+      // Anrede (du/Sie) wird aus der Originalmail erkannt, NICHT aus dem Tonfall.
       const fullName = userFullName(), firstName = userFirstName();
-      const closeName = { formell: fullName, locker: firstName, kurz: fullName };
 
       const sbtn = document.getElementById('suggestBtn');
       const container = document.getElementById('suggestions');
@@ -496,9 +490,10 @@
         + 'Rules:\n'
         + '- Reply in the SAME LANGUAGE as the original email (auto-detect it).\n'
         + '- Cover the DISTINCT plausible outcomes. If the sender offers several dates/times/options, create one reply per option (e.g. confirm the 28th; confirm the 31st) PLUS one decline / propose-another-time option.\n'
-        + '- Tone: ' + toneMap[tone] + '. ' + addressForm[tone] + ' Use the SAME form of address CONSISTENTLY across ALL options and within each reply — NEVER mix "Sie" and "du". Do not mirror the senders form of address; follow the instructed one.\n'
-        + '- Structure EVERY reply with real paragraph breaks: salutation on its own line, then a BLANK line, then the message (1-2 sentences), then a BLANK line, then the closing formula (e.g. "Viele Grüße" / "Best regards") and on the NEXT line the sign-off name. Name rule: if the reply is in ENGLISH always use "' + firstName + '"; if in GERMAN use "' + closeName[tone] + '". In the JSON "text", a blank line is \\n\\n and a single line break is \\n.\n'
-        + '- Salutation: begin each reply with a personal salutation using the sender name from the original email. English: "Dear <first name>". German ' + (tone === 'locker' ? 'du (informal): "Lieber <Vorname>" / "Liebe <Vorname>"' : 'Sie (formal): "Lieber Herr <Nachname>" / "Liebe Frau <Nachname>"') + ' — choose Herr/Frau and Lieber/Liebe by the recipient\'s likely gender.\n'
+        + '- Tone: ' + toneMap[tone] + '.\n'
+        + '- Form of address (German only): DETECT from the original email whether the sender uses informal "du" (du/dich/dir/dein/euch) or formal "Sie" (Sie/Ihnen/Ihre/Ihr). Mirror that SAME form in every option and within each reply, consistently, and NEVER mix "du" and "Sie". If genuinely unclear, default to "Sie".\n'
+        + '- Structure EVERY reply with real paragraph breaks: salutation on its own line, then a BLANK line, then the message (1-2 sentences), then a BLANK line, then the closing formula (e.g. "Viele Grüße" / "Best regards") and on the NEXT line the sign-off name. Name rule: English -> always "' + firstName + '"; German with "du" -> "' + firstName + '"; German with "Sie" -> "' + fullName + '". In the JSON "text", a blank line is \\n\\n and a single line break is \\n.\n'
+        + '- Salutation: begin each reply with a personal salutation using the sender name from the original email. English: "Dear <first name>". German with "du": "Lieber <Vorname>" / "Liebe <Vorname>". German with "Sie": "Lieber Herr <Nachname>" / "Liebe Frau <Nachname>". Choose Herr/Frau and Lieber/Liebe by the recipient\'s likely gender.\n'
         + '- Do NOT add any contact block or company footer after the name — a signature is appended automatically.\n'
         + '- If the reply is in German, use correct umlauts ü ö ä ß and ß, NEVER ue/oe/ae/ss.\n'
         + '- Keep each option to at most 3 short sentences.\n\n'
