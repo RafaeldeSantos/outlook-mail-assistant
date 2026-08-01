@@ -1,0 +1,42 @@
+KAPITELUEBERSICHT - The High-End Wingmen
+
+M4B  : Kapitel-Vor/Zurueck im Player, oder Kapitelliste antippen.
+MP3s : eine Datei je Kapitel, Titel-Vor/Zurueck springt genauso.
+
+  #     Start   Dauer  Titel
+----------------------------------------------------------------------
+  1   0:00:00    3:04  Operating Profile
+  2   0:03:04    2:51  Rules of the Game
+  3   0:05:56    2:17  Market Architecture
+  4   0:08:13    2:38  State & Flow
+  5   0:10:51    1:12  Selectivity Without Inaction
+  6   0:12:04    1:10  Solo Game
+  7   0:13:14    1:36  Group Game
+  8   0:14:51    2:11  Opening Systems
+  9   0:17:02    2:15  Conversation Engine
+ 10   0:19:18    2:05  Attraction Stack
+ 11   0:21:24    2:13  Qualifying & Minimum Effective Connection
+ 12   0:23:37    1:52  Escalation & Reciprocity Gates
+ 13   0:25:29    1:46  Frankfurt Playbook
+ 14   0:27:16    1:14  München & Düsseldorf
+ 15   0:28:31    1:57  International Premium Game
+ 16   0:30:29    2:34  Simple English Game
+ 17   0:33:03    2:29  Logistics Is Game
+ 18   0:35:33    3:00  Wingman & Friend Management
+ 19   0:38:33    2:15  Failure Diagnostics
+ 20   0:40:48    1:27  Follow-up After the Night
+ 21   0:42:16    2:03  90-Day Training System
+ 22   0:44:19    1:55  Scorecards
+ 23   0:46:15    2:02  Entscheidungsbäume
+ 24   0:48:17   12:08  Line Library
+ 25   1:00:26    1:45  Pocket Playbooks
+ 26   1:02:11    7:09  Szenarien 1: Frankfurt und direkte Routen
+ 27   1:09:21    7:33  Szenarien 2: State, Top-Targets und Attraction
+ 28   1:16:54    6:26  Szenarien 3: Grenzen, Sicherheit und soziale Kontexte
+ 29   1:23:21    6:29  Szenarien 4: Reisen, Reconnect und Follow-up
+ 30   1:29:51    5:49  Englische Field Scripts
+ 31   1:35:40    3:46  Drill-Karten
+ 32   1:39:27    2:00  Dreizehn-Wochen-Field-Workbook
+ 33   1:41:27    1:59  Quick Reference
+----------------------------------------------------------------------
+Gesamt: 1:43:27  (33 Kapitel)

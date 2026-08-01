@@ -113,6 +113,27 @@ def build_m4b(chapter_files: list[tuple[int, str, Path]], out_path: Path,
     metafile.unlink(missing_ok=True)
 
 
+def write_overview(chapter_files: list[tuple[int, str, Path]], out_path: Path,
+                   album: str) -> None:
+    """Kapitelliste mit Startzeiten - fuer Player ohne Kapitelunterstuetzung."""
+    def clock(seconds: float) -> str:
+        s = int(seconds)
+        return f"{s // 3600}:{s % 3600 // 60:02d}:{s % 60:02d}"
+
+    lines = [f"KAPITELUEBERSICHT - {album}", "",
+             "M4B  : Kapitel-Vor/Zurueck im Player, oder Kapitelliste antippen.",
+             "MP3s : eine Datei je Kapitel, Titel-Vor/Zurueck springt genauso.", "",
+             f"{'#':>3}  {'Start':>8}  {'Dauer':>6}  Titel", "-" * 70]
+    start = 0.0
+    for number, title, path in chapter_files:
+        length = duration(path)
+        lines.append(f"{number:>3}  {clock(start):>8}  "
+                     f"{int(length) // 60:>3}:{int(length) % 60:02d}  {title}")
+        start += length
+    lines += ["-" * 70, f"Gesamt: {clock(start)}  ({len(chapter_files)} Kapitel)"]
+    out_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def safe(name: str) -> str:
     name = re.sub(r"[^\w\s-]", "", name, flags=re.UNICODE).strip()
     return re.sub(r"\s+", "_", name)
@@ -149,6 +170,7 @@ def main(script_path: str, cfg_path: str, wav_dir: str, out_dir: str,
         print(f"  gemastert: {dst.name} ({duration(dst)/60:.1f} min)", flush=True)
 
     if produced:
+        write_overview(produced, out_dir / "Kapiteluebersicht.txt", album)
         m4b = out_dir / f"{safe(album)}_Hoerbuch.m4b"
         build_m4b(produced, m4b,
                   {"title": album, "artist": artist, "album": album,
