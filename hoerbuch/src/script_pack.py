@@ -154,22 +154,33 @@ def split_by_language(text: str, default: str = "de") -> list[tuple[str, str]]:
     return [(lang, " ".join(group)) for lang, group in merged]
 
 
+# Wortgrenze, die Bindestriche als Trenner behandelt: "Same-Night-Venue-Change"
+# soll wortweise ersetzt werden, "Kissen" aber nicht auf "Kiss" anspringen.
+LETTER = r"A-Za-zÄÖÜäöüß0-9"
+
+
 def apply_lexicon(text: str, lexicon: dict[str, str]) -> str:
     for grapheme, alias in lexicon.items():
-        text = re.sub(rf"(?<![\w-]){re.escape(grapheme)}(?![\w-])", alias, text)
+        text = re.sub(rf"(?<![{LETTER}]){re.escape(grapheme)}(?![{LETTER}])",
+                      alias, text)
     return text
 
 
-def load_lexicon(pls_path: Path) -> dict[str, str]:
-    if not pls_path.exists():
-        return {}
-    raw = pls_path.read_text(encoding="utf-8")
-    pairs = re.findall(
-        r"<grapheme>(.*?)</grapheme>\s*<alias>(.*?)</alias>", raw, flags=re.S
-    )
-    # laengste Graphemen zuerst, damit "Cold Reads" vor "Cold Read" greift
-    return dict(sorted(((g.strip(), a.strip()) for g, a in pairs),
-                       key=lambda kv: -len(kv[0])))
+def load_lexicon(pls_path: Path, json_path: Path | None = None) -> dict[str, str]:
+    """Aussprache-Lexikon aus dem Pack (.pls) plus eigene deutsche Umschriften."""
+    entries: list[tuple[str, str]] = []
+    if pls_path.exists():
+        raw = pls_path.read_text(encoding="utf-8")
+        entries += [
+            (g.strip(), a.strip())
+            for g, a in re.findall(
+                r"<grapheme>(.*?)</grapheme>\s*<alias>(.*?)</alias>", raw, flags=re.S)
+        ]
+    if json_path and json_path.exists():
+        data = json.loads(json_path.read_text(encoding="utf-8"))
+        entries += [(k, v) for k, v in data.items() if not k.startswith("_")]
+    # laengste Graphemen zuerst, damit "Cold Reads" vor "Cold" greift
+    return dict(sorted(entries, key=lambda kv: -len(kv[0])))
 
 
 def split_paragraph(para: str) -> list[tuple[str, str]]:
@@ -197,7 +208,10 @@ def build(pack_dir: str, cfg_path: str, out_path: str) -> None:
     pauses_before = cfg.get("pauses_before", {})
     trim_carriers = cfg.get("trim_repeated_carriers", True)
 
-    lexicon = load_lexicon(pack / "04_Pronunciation" / "wingman_pronunciation_aliases.pls")
+    lexicon = load_lexicon(
+        pack / "04_Pronunciation" / "wingman_pronunciation_aliases.pls",
+        Path(cfg_path).parent / "lexikon_de.json",
+    )
     manifest = json.loads((pack / "manifest.json").read_text(encoding="utf-8"))
 
     segments: list[dict] = []

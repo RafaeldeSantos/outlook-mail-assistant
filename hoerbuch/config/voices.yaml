@@ -15,26 +15,37 @@ piper:
   # Modelle werden von den sherpa-onnx-Releases geladen (Mirror der Piper-Voices)
   base_url: https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models
   sample_rate: 24000        # Zielrate nach Resampling
+  # expressiveness   = Variation in Klangfarbe und Melodie (Piper-Standard 0.667)
+  # rhythm_variation = Variation der Lautlaengen, also des Sprechrhythmus  (0.8)
+  # Hoehere Werte klingen erzaehlt statt abgelesen; ueber ~0.95 wird es unruhig.
   cast:
     narrator_de:
       model: vits-piper-de_DE-thorsten-high     # maennlich, ruhig, 22,05 kHz
       speaker: 0
-      speed: 1.0
+      speed: 1.04
+      expressiveness: 0.80
+      rhythm_variation: 0.92
       gain_db: 0.0
     voice_de:
-      model: vits-piper-de_DE-pavoque-low       # maennlich, anderes Timbre
+      model: vits-piper-de_DE-thorsten_emotional-medium  # Sprecher 0 = amused
       speaker: 0
-      speed: 0.97
+      speed: 1.0
+      expressiveness: 0.88
+      rhythm_variation: 0.95
       gain_db: 0.0
     narrator_en:
       model: vits-piper-en_US-lessac-high       # weiblich, US, 22,05 kHz
       speaker: 0
       speed: 1.0
+      expressiveness: 0.72
+      rhythm_variation: 0.85
       gain_db: 0.0
     voice_en:
       model: vits-piper-en_US-ryan-high         # maennlich, US, 22,05 kHz
       speaker: 0
-      speed: 0.97
+      speed: 0.98
+      expressiveness: 0.78
+      rhythm_variation: 0.90
       gain_db: 0.0
 
   # Alternativen zum Durchtauschen (gleiche Quelle, gleiches Namensschema):

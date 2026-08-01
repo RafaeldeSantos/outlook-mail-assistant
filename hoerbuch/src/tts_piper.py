@@ -59,6 +59,12 @@ def engine(role: str, cfg: dict):
                 tokens=str(folder / "tokens.txt"),
                 data_dir=str(folder / "espeak-ng-data"),
                 length_scale=1.0 / float(spec.get("speed", 1.0)),
+                # noise_scale steuert die Variation in Klangfarbe und Melodie,
+                # noise_scale_w die Variation der Lautlaengen - zusammen der
+                # Unterschied zwischen "abgelesen" und "erzaehlt".
+                # Piper-Standard: 0.667 / 0.8
+                noise_scale=float(spec.get("expressiveness", 0.667)),
+                noise_scale_w=float(spec.get("rhythm_variation", 0.8)),
             ),
             num_threads=int(os.environ.get("TTS_THREADS", "2")),
             provider="cpu",
