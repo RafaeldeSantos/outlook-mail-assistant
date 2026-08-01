@@ -1,0 +1,16 @@
+# Skript-Aufbereitung
+beautifulsoup4>=4.12
+lxml>=5.0
+lingua-language-detector>=2.0
+PyYAML>=6.0
+
+# Audio
+numpy>=1.26
+soundfile>=0.12
+soxr>=0.5
+
+# Backend A: offline, unbegrenzt (Piper-Stimmen ueber sherpa-onnx)
+sherpa-onnx>=1.10
+
+# Backend B: Microsoft-Edge-Neural-Stimmen, kostenlos ohne API-Key
+edge-tts>=7.0

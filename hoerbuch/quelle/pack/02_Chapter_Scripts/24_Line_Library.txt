@@ -1,0 +1,213 @@
+Kapitel 24. Line Library.
+
+Die Line Library ist ein Nachschlagewerk, kein Text zum Auswendiglernen. Hört die Beispiele als flexible Muster und passt sie an die reale Situation an.
+
+Opening.
+
+Deutsche Variante, Kontext Cold Read. Die Line lautet: „Du gibst mir Business-Woman-Vibes.“
+
+Deutsche Variante, Kontext Contrast. Die Line lautet: „Dein Stil ist kreativ, aber dein Blick ist ziemlich analytisch.“
+
+Deutsche Variante, Kontext Direkt. Die Line lautet: „Ich muss dir ein Kompliment machen: sehr gut abgestimmtes Outfit.“
+
+Deutsche Variante, Kontext Eye Contact. Die Line lautet: „Kennen wir uns, oder hast du dich einfach nur verliebt?“
+
+Deutsche Variante, Kontext Group. Die Line lautet: „Wer von euch hat den Abend geplant und wer beschwert sich nur professionell?“
+
+Deutsche Variante, Kontext Gruppe. Die Line lautet: „Geht ihr schon? Jetzt wollte ich euch gerade ansprechen.“
+
+Deutsche Variante, Kontext Gruppe. Die Line lautet: „Mädels, ihr seht aus, als hättet ihr etwas im Schilde.“
+
+Deutsche Variante, Kontext High Energy. Die Line lautet: „Wir sind wahrscheinlich gerade die attraktivsten Menschen im Raum.“
+
+Deutsche Variante, Kontext High Energy only. Die Line lautet: „Okay, welche ist die Wildeste von euch?“
+
+Deutsche Variante, Kontext Lounge. Die Line lautet: „Ihr diskutiert gerade erstaunlich ernst. Worum geht es?“
+
+Deutsche Variante, Kontext Observation. Die Line lautet: „Die Kette ist wirklich geschmackvoll. Fällt angenehm auf.“
+
+Deutsche Variante, Kontext Vibe. Die Line lautet: „Du wirkst sympathisch. Ich wollte prüfen, ob dein Vibe deine Ausstrahlung matcht.“
+
+Englische Variante, Kontext Group. Die Line lautet: „You two look like trouble. Which one is the bad influence?“
+
+Englische Variante, Kontext Leaving. Die Line lautet: „Are you leaving already? I was just about to meet you.“
+
+Englische Variante, Kontext Simple. Die Line lautet: „You look interesting. I had to say hi.“
+
+Englische Variante, Kontext Style. Die Line lautet: „Your style is very well put together. I like it.“
+
+Conversation.
+
+Deutsche Variante, Kontext Callback. Die Line lautet: „Das passt überhaupt nicht zu meinem ersten Eindruck von dir.“
+
+Deutsche Variante, Kontext Callback. Die Line lautet: „Okay, das erklärt einiges.“
+
+Deutsche Variante, Kontext Cold Read. Die Line lautet: „Du bist entweder die Vernünftige in deiner Gruppe oder die Ursache aller Probleme.“
+
+Deutsche Variante, Kontext Cold Read. Die Line lautet: „Du willst spontan wirken, planst aber wahrscheinlich jeden Urlaub komplett durch.“
+
+Deutsche Variante, Kontext Cold Read. Die Line lautet: „Du wirkst sehr kontrolliert. Privat bist du bestimmt deutlich chaotischer.“
+
+Deutsche Variante, Kontext Follow-up. Die Line lautet: „Und wie bist du ausgerechnet dazu gekommen?“
+
+Deutsche Variante, Kontext Follow-up. Die Line lautet: „Was genau daran macht dir am meisten Spaß?“
+
+Deutsche Variante, Kontext Observation. Die Line lautet: „Du hast den Blick von jemandem, der mehr beobachtet, als er zugibt.“
+
+Deutsche Variante, Kontext Profession. Die Line lautet: „Ich hätte nie gedacht, dass du das machst. Du siehst eher aus wie.“
+
+Deutsche Variante, Kontext Profession Joke. Die Line lautet: „Ich verkaufe Sonnenbrillen in Ruanda. Schwieriger Markt. Nein - Eigentlich bin ich Unternehmer - klingt spannender, als es meistens ist.“
+
+Deutsche Variante, Kontext Relate. Die Line lautet: „Das kenne ich. Bei mir ist es ähnlich, nur aus einem völlig anderen Grund.“
+
+Deutsche Variante, Kontext Yes-and. Die Line lautet: „Ah, du warst heute nur am Chillen. Das passt. Du siehst professionell entspannt aus.“
+
+Deutsche Variante, Kontext Zoom Out. Die Line lautet: „Volleyball? Das hätte ich bei deiner Größe wissen können. Bist du generell so wettbewerbsorientiert?“
+
+Englische Variante, Kontext Callback. Die Line lautet: „That does not fit my first impression of you at all.“
+
+Englische Variante, Kontext Contrast. Die Line lautet: „Creative style, analytical eyes. You are confusing me.“
+
+Englische Variante, Kontext Follow-up. Die Line lautet: „What do you enjoy most about it?“
+
+Englische Variante, Kontext Qualifier. Die Line lautet: „What do people usually get wrong about you?“
+
+Englische Variante, Kontext Yes-and. Die Line lautet: „That makes sense. You definitely look like the type who.“
+
+Attraction.
+
+Deutsche Variante, Kontext Disqualifier. Die Line lautet: „Du und ich würden wahrscheinlich nie klarkommen. Zu ähnliche Energie.“
+
+Deutsche Variante, Kontext Disqualifier. Die Line lautet: „Ich fange an, dich ein bisschen zu mögen. Das ist unpraktisch.“
+
+Deutsche Variante, Kontext Future Projection. Die Line lautet: „Mit dir würde ein Wochenende entweder sehr entspannt oder komplett eskalieren.“
+
+Deutsche Variante, Kontext Push-Pull. Die Line lautet: „Du bist entweder die Coolste hier oder die Verrückteste.“
+
+Deutsche Variante, Kontext Push-Pull. Die Line lautet: „Du bist ziemlich cool. Das macht mich noch etwas misstrauisch.“
+
+Deutsche Variante, Kontext Push-Pull. Die Line lautet: „Wir würden uns wahrscheinlich gut verstehen und ständig streiten.“
+
+Deutsche Variante, Kontext Specific. Die Line lautet: „Ich mag, wie du bei dem Thema sofort lebendig wirst.“
+
+Deutsche Variante, Kontext Warm Tease. Die Line lautet: „Du hast gerade sehr überzeugend versucht, seriös zu wirken.“
+
+Deutsche Variante, Kontext Warm Tease. Die Line lautet: „Du wirkst deutlich vernünftiger, als du wahrscheinlich bist.“
+
+Englische Variante, Kontext Disqualifier. Die Line lautet: „I am starting to like you. This is inconvenient.“
+
+Englische Variante, Kontext Push-Pull. Die Line lautet: „We would get along very well and argue all the time.“
+
+Englische Variante, Kontext Push-Pull. Die Line lautet: „You are cool. That makes me slightly suspicious.“
+
+Englische Variante, Kontext Tension. Die Line lautet: „There is something about you that attracts me and unsettles me.“
+
+Englische Variante, Kontext Warm Tease. Die Line lautet: „You look much more sensible than you probably are.“
+
+Qualifying.
+
+Deutsche Variante, Kontext Identity. Die Line lautet: „Bist du die Person, die den Plan macht, oder die ihn ruiniert?“
+
+Deutsche Variante, Kontext Imagination. Die Line lautet: „Was würdest du Verrücktes tun, wenn niemand wüsste, dass du es warst?“
+
+Deutsche Variante, Kontext Personal. Die Line lautet: „Was schätzen Menschen nach fünf Minuten komplett falsch an dir ein?“
+
+Deutsche Variante, Kontext Spontaneity. Die Line lautet: „Was war die spontanste Sache, die du dieses Jahr gemacht hast?“
+
+Deutsche Variante, Kontext Values. Die Line lautet: „Was ist dir bei Menschen wichtiger als Status und Aussehen?“
+
+Deutsche Variante, Kontext Values. Die Line lautet: „Wofür können dich deine Freunde nachts um drei anrufen?“
+
+Deutsche Variante, Kontext Vulnerability. Die Line lautet: „Was ist deine geheimste Schwäche?“
+
+Englische Variante, Kontext Personal. Die Line lautet: „What do people usually get wrong about you?“
+
+Englische Variante, Kontext Spontaneity. Die Line lautet: „What is the most spontaneous thing you did this year?“
+
+Transition.
+
+Deutsche Variante, Kontext After Kiss. Die Line lautet: „Ein Wasser nehme ich noch. Aber du benimmst dich.“
+
+Deutsche Variante, Kontext After Kiss. Die Line lautet: „Jetzt brauche ich wirklich ein Wasser. Aber du nutzt die Situation nicht aus.“
+
+Deutsche Variante, Kontext Direct Default. Die Line lautet: „Ich würde noch zehn Minuten auf ein Wasser mitkommen, wenn du Lust hast.“
+
+Deutsche Variante, Kontext Direct Default. Die Line lautet: „Lass uns oben noch kurz ein Wasser trinken.“
+
+Deutsche Variante, Kontext Direct Fallback. Die Line lautet: „Ich würde noch kurz mit reinkommen, wenn du Lust hast. Ein Wasser, zehn Minuten, ganz entspannt.“
+
+Deutsche Variante, Kontext Drink. Die Line lautet: „Komm, wir holen kurz einen Drink.“
+
+Deutsche Variante, Kontext Frame Switch. Die Line lautet: „Ein Wasser nehme ich noch. Aber nur zehn Minuten - und du benimmst dich.“
+
+Deutsche Variante, Kontext Frame Switch. Die Line lautet: „Ich lasse mich noch auf ein Wasser einladen. Mehr verspreche ich heute nicht.“
+
+Deutsche Variante, Kontext Fresh Air. Die Line lautet: „Ich bin gleich weg. Komm fünf Minuten mit an die frische Luft.“
+
+Deutsche Variante, Kontext Hard Logistics. Die Line lautet: „Heute wird logistisch unnötig kompliziert. Donnerstag um 20:30 ein Drink?“
+
+Deutsche Variante, Kontext Hotel. Die Line lautet: „Wir können bei dir noch ein Wasser oder einen letzten Drink nehmen, wenn du Lust hast.“
+
+Deutsche Variante, Kontext Hotel Bar. Die Line lautet: „Lass uns noch zehn Minuten in die Hotelbar gehen.“
+
+Deutsche Variante, Kontext Position. Die Line lautet: „Komm, wir stellen uns kurz da rüber. Hier versteht man nichts.“
+
+Deutsche Variante, Kontext Ride. Die Line lautet: „Ich fahre ohnehin gleich. Wenn es in deine Richtung ist, setze ich dich gern ab.“
+
+Englische Variante, Kontext Direct Default. Die Line lautet: „I can come up for one glass of water if you want. Ten minutes, relaxed.“
+
+Englische Variante, Kontext Direct Fallback. Die Line lautet: „I can come up for one glass of water if you want. Ten minutes, relaxed, no pressure.“
+
+Englische Variante, Kontext Frame Switch. Die Line lautet: „I will walk you up, have some water and then disappear - unless you make that difficult.“
+
+Englische Variante, Kontext Frame Switch. Die Line lautet: „One glass of water. Ten minutes. And behave.“
+
+Englische Variante, Kontext Fresh Air. Die Line lautet: „Come outside with me for five minutes. It is too loud.“
+
+Englische Variante, Kontext Hotel. Die Line lautet: „My hotel is two minutes away. We can have one last drink there if you want.“
+
+Englische Variante, Kontext Position. Die Line lautet: „Come over there with me. I cannot hear you here.“
+
+Englische Variante, Kontext Safety. Die Line lautet: „Tell your friends where we are going.“
+
+Escalation.
+
+Deutsche Variante, Kontext Check. Die Line lautet: „Ist das okay?“
+
+Deutsche Variante, Kontext Kiss. Die Line lautet: „Ich würde dich gerade gern küssen.“
+
+Deutsche Variante, Kontext Slow. Die Line lautet: „Kein Problem. Wir machen langsam.“
+
+Englische Variante, Kontext Check. Die Line lautet: „Is this okay?“
+
+Englische Variante, Kontext Kiss. Die Line lautet: „I would like to kiss you.“
+
+Englische Variante, Kontext Slow. Die Line lautet: „No problem. We can slow down.“
+
+Exit.
+
+Deutsche Variante, Kontext Close. Die Line lautet: „Ich muss weiter. Wir setzen das ein anderes Mal fort.“
+
+Deutsche Variante, Kontext Peak. Die Line lautet: „Ich gehe kurz zu meinen Freunden. War nett, dich kennenzulernen.“
+
+Deutsche Variante, Kontext Weak Set. Die Line lautet: „Alles gut. Schönen Abend euch.“
+
+Englische Variante, Kontext Weak Set. Die Line lautet: „No worries. Have a good night.“
+
+Follow-up.
+
+Deutsche Variante, Kontext After. Die Line lautet: „War ein guter Abend. Hoffe, du bist gut angekommen.“
+
+Deutsche Variante, Kontext Concrete. Die Line lautet: „Bin Donnerstag wieder da. 20:30 Uhr, ein Drink?“
+
+Deutsche Variante, Kontext Low Frequency. Die Line lautet: „War gut, dich kennenzulernen. Melde mich, wenn ich wieder in der Stadt bin.“
+
+Deutsche Variante, Kontext Reconnect. Die Line lautet: „Bin Donnerstag wieder in München. Lass uns einen Drink nachholen.“
+
+Englische Variante, Kontext After. Die Line lautet: „Good seeing you. Hope you got home safely.“
+
+Englische Variante, Kontext Concrete. Die Line lautet: „I am back next Friday. One drink at nine?“
+
+Englische Variante, Kontext Reconnect. Die Line lautet: „I am back in Marbella next Friday. Let us have a drink.“
+
+Die Kernaussage: Verwendet Lines als sprachliche Bausteine, nicht als Identität.

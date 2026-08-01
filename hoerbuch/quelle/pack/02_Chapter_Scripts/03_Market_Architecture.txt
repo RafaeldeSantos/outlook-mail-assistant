@@ -1,0 +1,41 @@
+Kapitel 3. Market Architecture.
+
+Gutes Game beginnt mit der Wahl des Marktes. Ein passender Raum, kurze Wege und eine saubere Route schlagen fast immer eine zusätzliche Routine.
+
+Frankfurt. Social reality: Diskret, berufliche Überschneidungen, hochwertige Bars. Best route: Route A Hotelgast: draußen dann Kiss dann Hotel. Route B lokal: draußen dann Kiss dann transparente Taxi/Auto-Option dann direkte Einladung oder konkreter Close.. Kiss default: Eher außerhalb. Main friction: Sichtbarkeit, Freundinnen, unnötig viele Übergänge.
+
+München. Social reality: Mehr Event- und Reisegefühl, starke Gruppen. Best route: Venue dann kurzer Positionswechsel dann Kiss dann Taxi/Hotel. Kiss default: Im Venue oder direkt davor. Main friction: Freundinnen, Türpolitik, lange Wege.
+
+Düsseldorf. Social reality: Kompakte, mode- und statusaffine Szene. Best route: Bar/Club dann kurzer Walk dann Taxi dann Hotel/Wohnung. Kiss default: Situativ. Main friction: Bekanntenkreise, Gruppendynamik.
+
+Ibiza/Marbella/Mykonos. Social reality: International, Urlaubsmomentum, Hotelnähe. Best route: Venue dann klarer Mini-Plan dann nahe Hotelbar/Hotel. Kiss default: Früher möglich. Main friction: Große Gruppen, wechselnde Pläne, Alkohol.
+
+Mallorca/Ballermann. Social reality: Trainingsmarkt, hohe Anzahl, geringerer Premium-Fit. Best route: Approach- und State-Reps; Full Funnel nur bei echtem Top-Target. Kiss default: Situativ. Main friction: Zeitverlust in unpassenden Sets.
+
+Die Setup-Architektur.
+
+Room fit
+
+Genug Frauen, die optisch und sozial zum eigenen Profil passen.
+
+Social embedding
+
+Freunde als Base, positive Kontakte im Raum, keine künstlich inszenierte Eifersucht.
+
+Short route
+
+Frische Luft, Taxi, Hotelbar und Zielort mit möglichst wenigen Drop-off-Punkten.
+
+Status context
+
+Stil, Service, Umfeld und Transport werden erlebt, nicht erklärt.
+
+Driver plan
+
+Wer fährt, plant den Abend praktisch nüchtern. Wasser, Kaffee oder Warten nach Gefühl sind kein Beweis der Fahrtüchtigkeit.
+
+Tier-2 option
+
+Bei echter Chemie und harter Logistik steht ein konkreter Termin bereit.
+
+Die Kernaussage: Optimiert zuerst Raum, Route und Timing. Erst danach optimiert ihr einzelne Formulierungen.

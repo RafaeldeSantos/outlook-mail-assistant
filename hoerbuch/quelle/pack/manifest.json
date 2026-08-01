@@ -1,0 +1,238 @@
+{
+  "title": "The High-End Wingmen Premium Audiobook",
+  "version": "2",
+  "tracks": [
+    {
+      "track": 1,
+      "code": "01",
+      "title": "Operating Profile",
+      "file": "01_Operating_Profile.txt",
+      "characters": 2853
+    },
+    {
+      "track": 2,
+      "code": "02",
+      "title": "Rules of the Game",
+      "file": "02_Rules_of_the_Game.txt",
+      "characters": 2778
+    },
+    {
+      "track": 3,
+      "code": "03",
+      "title": "Market Architecture",
+      "file": "03_Market_Architecture.txt",
+      "characters": 2177
+    },
+    {
+      "track": 4,
+      "code": "04",
+      "title": "State & Flow",
+      "file": "04_State_Flow.txt",
+      "characters": 2458
+    },
+    {
+      "track": 5,
+      "code": "05",
+      "title": "Selectivity Without Inaction",
+      "file": "05_Selectivity_Without_Inaction.txt",
+      "characters": 1050
+    },
+    {
+      "track": 6,
+      "code": "06",
+      "title": "Solo Game",
+      "file": "06_Solo_Game.txt",
+      "characters": 1196
+    },
+    {
+      "track": 7,
+      "code": "07",
+      "title": "Group Game",
+      "file": "07_Group_Game.txt",
+      "characters": 1539
+    },
+    {
+      "track": 8,
+      "code": "08",
+      "title": "Opening Systems",
+      "file": "08_Opening_Systems.txt",
+      "characters": 2168
+    },
+    {
+      "track": 9,
+      "code": "09",
+      "title": "Conversation Engine",
+      "file": "09_Conversation_Engine.txt",
+      "characters": 2068
+    },
+    {
+      "track": 10,
+      "code": "10",
+      "title": "Attraction Stack",
+      "file": "10_Attraction_Stack.txt",
+      "characters": 2186
+    },
+    {
+      "track": 11,
+      "code": "11",
+      "title": "Qualifying & Minimum Effective Connection",
+      "file": "11_Qualifying_Minimum_Effective_Connection.txt",
+      "characters": 2259
+    },
+    {
+      "track": 12,
+      "code": "12",
+      "title": "Escalation & Reciprocity Gates",
+      "file": "12_Escalation_Reciprocity_Gates.txt",
+      "characters": 1906
+    },
+    {
+      "track": 13,
+      "code": "13",
+      "title": "Frankfurt Playbook",
+      "file": "13_Frankfurt_Playbook.txt",
+      "characters": 1818
+    },
+    {
+      "track": 14,
+      "code": "14",
+      "title": "München & Düsseldorf",
+      "file": "14_München_Düsseldorf.txt",
+      "characters": 1253
+    },
+    {
+      "track": 15,
+      "code": "15",
+      "title": "International Premium Game",
+      "file": "15_International_Premium_Game.txt",
+      "characters": 1851
+    },
+    {
+      "track": 16,
+      "code": "16",
+      "title": "Simple English Game",
+      "file": "16_Simple_English_Game.txt",
+      "characters": 2728
+    },
+    {
+      "track": 17,
+      "code": "17",
+      "title": "Logistics Is Game",
+      "file": "17_Logistics_Is_Game.txt",
+      "characters": 2253
+    },
+    {
+      "track": 18,
+      "code": "18",
+      "title": "Wingman & Friend Management",
+      "file": "18_Wingman_Friend_Management.txt",
+      "characters": 2694
+    },
+    {
+      "track": 19,
+      "code": "19",
+      "title": "Failure Diagnostics",
+      "file": "19_Failure_Diagnostics.txt",
+      "characters": 2177
+    },
+    {
+      "track": 20,
+      "code": "20",
+      "title": "Follow-up After the Night",
+      "file": "20_Follow_up_After_the_Night.txt",
+      "characters": 1364
+    },
+    {
+      "track": 21,
+      "code": "21",
+      "title": "90-Day Training System",
+      "file": "21_90_Day_Training_System.txt",
+      "characters": 2191
+    },
+    {
+      "track": 22,
+      "code": "22",
+      "title": "Scorecards",
+      "file": "22_Scorecards.txt",
+      "characters": 1418
+    },
+    {
+      "track": 23,
+      "code": "23",
+      "title": "Entscheidungsbäume",
+      "file": "23_Entscheidungsbäume.txt",
+      "characters": 2173
+    },
+    {
+      "track": 24,
+      "code": "24",
+      "title": "Line Library",
+      "file": "24_Line_Library.txt",
+      "characters": 11555
+    },
+    {
+      "track": 25,
+      "code": "25",
+      "title": "Pocket Playbooks",
+      "file": "25_Pocket_Playbooks.txt",
+      "characters": 1690
+    },
+    {
+      "track": 26,
+      "code": "26_1",
+      "title": "Szenarien 1: Frankfurt und direkte Routen",
+      "file": "26_Szenarien_1_Frankfurt_und_direkte_Routen.txt",
+      "characters": 7008
+    },
+    {
+      "track": 27,
+      "code": "26_2",
+      "title": "Szenarien 2: State, Top-Targets und Attraction",
+      "file": "27_Szenarien_2_State_Top_Targets_und_Attraction.txt",
+      "characters": 7108
+    },
+    {
+      "track": 28,
+      "code": "26_3",
+      "title": "Szenarien 3: Grenzen, Sicherheit und soziale Kontexte",
+      "file": "28_Szenarien_3_Grenzen_Sicherheit_und_soziale_Kontexte.txt",
+      "characters": 5885
+    },
+    {
+      "track": 29,
+      "code": "26_4",
+      "title": "Szenarien 4: Reisen, Reconnect und Follow-up",
+      "file": "29_Szenarien_4_Reisen_Reconnect_und_Follow_up.txt",
+      "characters": 5953
+    },
+    {
+      "track": 30,
+      "code": "27",
+      "title": "Englische Field Scripts",
+      "file": "30_Englische_Field_Scripts.txt",
+      "characters": 5114
+    },
+    {
+      "track": 31,
+      "code": "28",
+      "title": "Drill-Karten",
+      "file": "31_Drill_Karten.txt",
+      "characters": 3308
+    },
+    {
+      "track": 32,
+      "code": "29",
+      "title": "Dreizehn-Wochen-Field-Workbook",
+      "file": "32_Dreizehn_Wochen_Field_Workbook.txt",
+      "characters": 2171
+    },
+    {
+      "track": 33,
+      "code": "30",
+      "title": "Quick Reference",
+      "file": "33_Quick_Reference.txt",
+      "characters": 2022
+    }
+  ],
+  "total_characters": 98372
+}

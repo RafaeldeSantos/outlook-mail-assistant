@@ -1,0 +1,19 @@
+VOICE BRIEF — HIGH-END WINGMEN AUDIOBOOK
+
+Male, approximately 35 to 45. Native or near-native Standard German. Calm, confident and conversational. Premium but not theatrical. Warm authority, dry humor, no motivational-coach shouting, no commercial radio voice, no exaggerated seduction tone. Natural sentence endings, clear consonants, controlled pacing and believable pauses.
+
+The same voice must handle simple international English without a heavy German accent. English should sound clear and worldly, not artificially American. The voice needs enough range to distinguish narration from quoted field lines, but it must remain the same person.
+
+Preferred categories in the ElevenLabs Voice Library:
+- Language: German
+- Gender: Male
+- Age: Middle aged
+- Use case: Narration or Conversational
+- Description keywords: calm, confident, warm, sophisticated, natural, dry, premium
+
+Avoid:
+- booming trailer voice
+- hyper-energetic social-media voice
+- breathy ASMR
+- robotic newsreader
+- exaggerated alpha or motivational delivery

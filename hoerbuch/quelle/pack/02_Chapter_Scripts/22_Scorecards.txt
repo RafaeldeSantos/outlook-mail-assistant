@@ -1,0 +1,31 @@
+Kapitel 22. Scorecards.
+
+Scorecards messen Handlungen, Responsivität, Gegenseitigkeit und Routenqualität. Sie messen nicht den eigenen Wert.
+
+Night scorecard.
+
+Warm-up. 0: None. 1: Partial. 2: Completed. Target: 2.
+
+Top target approached. 0: No. 1: Late. 2: Within 5 sec. Target: 2.
+
+Responsive conversation. 0: Script/interview. 1: Mixed. 2: Follow-up + callback + relate. Target: 2.
+
+Warmth oder challenge. 0: Cold or approval seeking. 1: Mixed. 2: Warm edge calibrated. Target: 2.
+
+Position changes. 0: 0. 1: 1. 2: 2+. Target: 2.
+
+Reciprocity gates. 0: Guessed. 1: One signal. 2: Two current signals. Target: 2.
+
+Kiss window. 0: Avoided. 1: Detected. 2: Acted/slowed correctly. Target: 2.
+
+Route quality. 0: Complex. 1: Acceptable. 2: Shortest transparent route. Target: 2.
+
+Tier-2 close. 0: Missed strong logistics block. 1: Vague. 2: Concrete day/time. Target: As needed.
+
+Consent oder exit. 0: Poor. 1: Mixed. 2: Clear and responsive. Target: 2.
+
+Session log template.
+
+DATE oder CITY oder VENUE: STATE AT 30 MIN (0-4): BEST TARGET APPROACHED? ja oder nein BISS OPENER: REAL FOLLOW-UP USED: CALLBACK oder SPECIFIC DETAIL: WARMTH-CHALLENGE CALIBRATION: TWO GREEN SIGNALS BEFORE BIGGEST MOVE: POSITION CHANGES: KISS WINDOW: ROUTE USED: TIER-2 CLOSE IF NEEDED: FINAL STAGE: ONE THING TO REMOVE: ONE DRILL:
+
+Die Kernaussage: Was gemessen wird, ist das Verhalten. Nicht die Zahl der Frauen, die euch bestätigt haben.

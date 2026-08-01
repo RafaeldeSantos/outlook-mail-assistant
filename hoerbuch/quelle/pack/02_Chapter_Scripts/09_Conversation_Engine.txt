@@ -1,0 +1,63 @@
+Kapitel 9. Conversation Engine.
+
+Der Gesprächsmotor ist kurz, spezifisch und responsiv. Ihr hört zu, greift ein echtes Detail auf und bewegt die Dynamik weiter.
+
+Der Gesprächs-Loop.
+
+Acknowledge
+
+->
+
+Real follow-up
+
+->
+
+Comment oder Play
+
+->
+
+Relate
+
+->
+
+Move
+
+Acknowledge.
+
+Nimm ein echtes Detail auf: „Ah, du machst das schon seit sechs Jahren.“
+
+Real follow-up.
+
+Wenn ihre Antwort Energie enthält: „Was genau daran macht dir am meisten Spaß?“ Keine neue Themenfrage.
+
+Comment oder Play.
+
+„Das passt überhaupt nicht zu meinem ersten Eindruck von dir.“ Oder ein Callback auf etwas, das sie vorher gesagt hat.
+
+Relate.
+
+Eine kurze ehrliche eigene Offenbarung, ein bis zwei Sätze. Nähe entsteht durch Gegenseitigkeit, nicht durch Verhör.
+
+Move.
+
+Nach zwei bis drei guten Loops: anderer Platz, Bar, frische Luft oder konkreter nächster Schritt.
+
+Anschlussfragen schlagen Themenwechsel.
+
+Die Line lautet: „Sie: „Ich bin Anwältin.“ Du: „Was daran macht dir tatsächlich Spaß - das Gewinnen oder das Denken?“
+
+Die Line lautet: „Sie: „Ich spiele Volleyball.“ Du: „Was ist daran besser als an jedem anderen Sport?“
+
+Callback-Beispiele.
+
+Erstens, „Okay, das erklärt einiges.“. Zweitens, „Das passt überhaupt nicht zu meinem ersten Eindruck von dir.“. Drittens, „Du hast vor zehn Minuten noch behauptet, du seist vernünftig.“. Viertens, „Dann plane ich für 20 Uhr, damit du realistisch um 21 Uhr da bist.“.
+
+Cold Reads als Hypothesen.
+
+Erstens, Du wirkst nach außen sehr kontrolliert, aber privat wahrscheinlich deutlich chaotischer. Zweitens, Du willst spontan wirken, planst aber vermutlich jeden Urlaub komplett durch. Drittens, Du beobachtest mehr, als du zugibst. Viertens, Dein Stil sagt kreativ. Dein Blick sagt Zahlen und Kontrolle.
+
+Die Anti-Interview-Regel.
+
+Verboten sind nicht Fragen, sondern Switch-Question-Ketten. Wenn eine Antwort Substanz hat, bleib dort. Wenn zwei leichte Beteiligungsmöglichkeiten nur Ein-Wort-Antworten bringen, re-hook einmal und geh.
+
+Die Kernaussage: Acknowledge, echte Anschlussfrage, Kommentar, kurze eigene Offenbarung, dann Bewegung.

@@ -1,0 +1,6 @@
+models/
+out/wav/
+out/*.wav
+out/render.log
+__pycache__/
+*.pyc

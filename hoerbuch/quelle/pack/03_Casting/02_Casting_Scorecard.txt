@@ -1,0 +1,22 @@
+VOICE CASTING SCORECARD
+
+Voice name / ID:
+
+1. German naturalness (1-10):
+2. English naturalness (1-10):
+3. Language switching without accent drift (1-10):
+4. Long-form warmth and authority (1-10):
+5. Natural pauses and sentence endings (1-10):
+6. Quoted lines sound spontaneous, not acted (1-10):
+7. No radio-ad or motivational-coach quality (1-10):
+8. Listening fatigue after three minutes (1-10, high is good):
+
+Fatal flaws:
+- robotic cadence
+- clipped word endings
+- heavy accent drift
+- overacting
+- unnatural English
+- monotony
+
+Decision: Keep / Reject / Retest with settings
