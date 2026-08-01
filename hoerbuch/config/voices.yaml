@@ -26,11 +26,14 @@ piper:
       expressiveness: 0.80
       rhythm_variation: 0.92
       gain_db: 0.0
+    # Deutsch bleibt durchgehend dieselbe Stimme - kein Sprecherwechsel zwischen
+    # Erzaehlung und zitierter Zeile. Die Zeilen bekommen nur etwas mehr Zeit
+    # und Ausdruck, so wie derselbe Sprecher eine Zeile anders vortraegt.
     voice_de:
-      model: vits-piper-de_DE-thorsten_emotional-medium  # Sprecher 0 = amused
+      model: vits-piper-de_DE-thorsten-high
       speaker: 0
-      speed: 1.0
-      expressiveness: 0.88
+      speed: 0.98
+      expressiveness: 0.86
       rhythm_variation: 0.95
       gain_db: 0.0
     narrator_en:
