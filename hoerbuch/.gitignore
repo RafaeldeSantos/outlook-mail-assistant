@@ -4,3 +4,5 @@ out/*.wav
 out/render.log
 __pycache__/
 *.pyc
+out/*.m4b
+out/*.zip
