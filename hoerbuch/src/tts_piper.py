@@ -95,6 +95,12 @@ def render_chapter(args) -> tuple[int, str, float]:
     cfg = yaml.safe_load(Path(cfg_path).read_text(encoding="utf-8"))
     sr = int(cfg["piper"]["sample_rate"])
 
+    existing = Path(out_dir) / f"{number:02d}.wav"
+    if os.environ.get("TTS_SKIP_EXISTING") and existing.exists():
+        info = sf.info(existing)
+        print(f"  Kapitel {number:02d} vorhanden: {title}", flush=True)
+        return number, str(existing), info.frames / info.samplerate
+
     pieces: list[np.ndarray] = [silence(500, sr)]
     for seg in segments:
         if seg["pause_before"]:

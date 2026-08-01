@@ -55,11 +55,16 @@ DETECTOR = (
 QUOTE_RE = re.compile(r'[„“”"“„]([^„“”"“„]{2,400}?)[“”"“”]')
 
 # Traegersaetze vor einer Feldzeile.
-CARRIER_RE = re.compile(
-    r"^(Die Line lautet|Eine m[oö]gliche Line( ist)?|Die Kernaussage|Line|Der Einstieg|"
-    r"Der [UÜ]bergang oder Close|Die Interaktion)\s*[:.]?\s*$",
-    re.IGNORECASE,
+CARRIERS = (
+    r"Die Line lautet|Eine m[oö]gliche Line(?: ist)?|Die Kernaussage|"
+    r"Der Einstieg|Der [UÜ]bergang oder Close|Die Interaktion|Der Kontext|"
+    r"Das Ziel|Der Hauptfehler|Die Korrektur oder der Exit|Der Ablauf|Line"
 )
+CARRIER_RE = re.compile(rf"^(?:{CARRIERS})\s*[:.]?\s*$", re.IGNORECASE)
+
+# Deutscher Traegersatz mit direkt anschliessendem - oft englischem - Inhalt.
+# Ohne Trennung liest die englische Erzaehlstimme "Die Interaktion:" mit.
+CARRIER_LEAD_RE = re.compile(rf"^({CARRIERS})\s*:\s*(?=\S)(.+)$", re.IGNORECASE | re.S)
 
 DE_MARKERS = {
     "und", "nicht", "bei", "dann", "wenn", "oder", "mit", "für", "ein", "eine",
@@ -235,6 +240,24 @@ def build(pack_dir: str, cfg_path: str, out_path: str) -> None:
                     chunk = expand_rubric(chunk)
 
                 block = "chapter" if is_heading else ("line" if kind == "line" else "para")
+
+                # Traegersatz vom Inhalt trennen, damit "Die Interaktion:"
+                # immer deutsch bleibt, auch wenn danach Englisch folgt.
+                lead = None
+                if kind == "narration" and not is_heading:
+                    m = CARRIER_LEAD_RE.match(chunk)
+                    if m:
+                        lead, chunk = m.group(1).strip() + ":", m.group(2).strip()
+
+                if lead:
+                    spoken_lead = normalize(apply_lexicon(lead, lexicon), "de")
+                    segments.append({
+                        "id": len(segments), "chapter": track["track"],
+                        "chapter_title": track["title"], "role": "narrator_de",
+                        "lang": "de", "kind": block, "text": spoken_lead,
+                        "pause_before": pauses_before.get(block, 0),
+                        "pause_after": 220,
+                    })
 
                 # Zitierte Zeilen bleiben ein Stueck; Erzaehltext wird in
                 # sprachreine Laeufe zerlegt, damit gemischte Absaetze nicht
