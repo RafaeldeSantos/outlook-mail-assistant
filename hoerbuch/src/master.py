@@ -52,6 +52,12 @@ def normalize_chapter(src: Path, dst: Path, target: dict, bitrate: str,
                      f":offset={stats.get('target_offset', 0)}:linear=true")
     chain = f"highpass=f=65,{loudnorm}"
 
+    # loudnorm haelt das True-Peak-Ziel nicht zuverlaessig ein - einzelne
+    # Kapitel kamen auf 0 dBFS und darueber. Ein nachgeschalteter Limiter
+    # garantiert die Grenze; 0,2 dB Reserve fangen Intersample-Peaks ab.
+    grenze = 10 ** ((float(target["true_peak"]) - 0.2) / 20.0)
+    chain += f",alimiter=limit={grenze:.4f}:attack=5:release=50:level=disabled"
+
     fade = float(target.get("fade_ms", 0)) / 1000.0
     if fade > 0:
         total = duration(src)

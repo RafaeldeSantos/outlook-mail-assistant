@@ -1,0 +1,51 @@
+KAPITELUEBERSICHT - The Selective Operator - Rafael Edition
+
+M4B  : Kapitel-Vor/Zurueck im Player, oder Kapitelliste antippen.
+MP3s : eine Datei je Kapitel, Titel-Vor/Zurueck springt genauso.
+
+  #     Start   Dauer  Titel
+----------------------------------------------------------------------
+  1   0:00:00    0:50  Intro und Gebrauchsanweisung
+  2   0:00:50    2:56  Executive Profile
+  3   0:03:46    2:55  Rules of the Game
+  4   0:06:41    2:18  Market Architecture
+  5   0:09:00    2:38  State & Flow
+  6   0:11:39    1:07  Selectivity Without Inaction
+  7   0:12:46    0:36  Solo Game
+  8   0:13:23    1:18  Group Game
+  9   0:14:41    2:14  Opening Systems
+ 10   0:16:55    1:10  Conversation Engine
+ 11   0:18:06    1:14  Attraction Stack
+ 12   0:19:20    2:05  Qualifying & Minimum Effective Connection
+ 13   0:21:26    1:34  Escalation & Reciprocity Gates
+ 14   0:23:00    0:56  Frankfurt Playbook
+ 15   0:23:56    0:55  Munich & Duesseldorf
+ 16   0:24:52    1:00  International Premium Game
+ 17   0:25:53    0:52  Simple English Game
+ 18   0:26:45    2:08  Logistics Is Game
+ 19   0:28:54    2:10  Friend Management
+ 20   0:31:05    2:21  Failure Diagnostics
+ 21   0:33:26    0:46  Follow-up After the Night
+ 22   0:34:12    1:57  90-Day Training System
+ 23   0:36:10    1:27  Scorecards
+ 24   0:37:38    0:19  Decision Trees
+ 25   0:37:57    4:47  Line Library: Opening und Conversation
+ 26   0:42:45    2:57  Line Library: Attraction und Qualifying
+ 27   0:45:42    3:13  Line Library: Transition und Escalation
+ 28   0:48:56    1:32  Line Library: Exit und Follow-up
+ 29   0:50:28    3:52  Line Library: English Lines
+ 30   0:54:21    1:38  Pocket Playbooks
+ 31   0:55:59    6:39  Szenario-Playbooks, Teil 1
+ 32   1:02:38    6:06  Szenario-Playbooks, Teil 2
+ 33   1:08:45    5:21  Szenario-Playbooks, Teil 3
+ 34   1:14:07    5:20  Szenario-Playbooks, Teil 4
+ 35   1:19:27    5:24  Szenario-Playbooks, Teil 5
+ 36   1:24:51    3:03  English Field Scripts, Teil 1
+ 37   1:27:55    2:59  English Field Scripts, Teil 2
+ 38   1:30:55    3:26  Field Drills, Teil 1
+ 39   1:34:21    3:17  Field Drills, Teil 2
+ 40   1:37:38    5:08  13-Week Field Workbook
+ 41   1:42:47    1:42  Quick Reference Cards
+ 42   1:44:29    0:33  Abschluss
+----------------------------------------------------------------------
+Gesamt: 1:45:03  (42 Kapitel)
