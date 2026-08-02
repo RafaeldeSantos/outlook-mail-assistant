@@ -79,13 +79,18 @@ def engine(role: str, cfg: dict):
 
 def say(text: str, role: str, cfg: dict, target_sr: int) -> np.ndarray:
     tts, spec = engine(role, cfg)
-    audio = tts.generate(text, sid=int(spec.get("speaker", 0)),
-                         speed=float(spec.get("speed", 1.0)))
+    speed = float(spec.get("speed", 1.0))
+    # pitch < 1 senkt die Stimme. Das Umsampeln verlaengert sie dabei um 1/pitch,
+    # deshalb wird entsprechend schneller synthetisiert - die Dauer bleibt gleich,
+    # nur die Klangfarbe wandert nach unten.
+    pitch = float(spec.get("pitch", 1.0))
+    audio = tts.generate(text, sid=int(spec.get("speaker", 0)), speed=speed / pitch)
     samples = np.asarray(audio.samples, dtype=np.float32)
     if samples.size == 0:
         return np.zeros(0, dtype=np.float32)
-    if audio.sample_rate != target_sr:
-        samples = soxr.resample(samples, audio.sample_rate, target_sr, quality="VHQ")
+    out_rate = target_sr / pitch
+    if audio.sample_rate != out_rate:
+        samples = soxr.resample(samples, audio.sample_rate, out_rate, quality="VHQ")
     gain = float(spec.get("gain_db", 0.0))
     if gain:
         samples = samples * (10.0 ** (gain / 20.0))
