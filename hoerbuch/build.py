@@ -42,7 +42,10 @@ def main() -> None:
                     help="nur diese Schritte ausfuehren (mehrfach nutzbar)")
     ap.add_argument("--workers", type=int, default=4,
                     help="Prozesse fuer die Offline-Synthese")
+    ap.add_argument("--pack", default=str(PACK),
+                    help="Quellordner mit Kapitel-Skripten (siehe src/laden.py)")
     args = ap.parse_args()
+    pack = Path(args.pack)
 
     cfg = yaml.safe_load(CFG.read_text(encoding="utf-8"))
     backend = args.backend or cfg.get("backend", "piper")
@@ -50,7 +53,7 @@ def main() -> None:
     OUT.mkdir(exist_ok=True)
 
     if "script" in steps:
-        sh([SRC / "script_pack.py", PACK, CFG, OUT / "script.json"])
+        sh([SRC / "script_pack.py", pack, CFG, OUT / "script.json"])
 
     if "tts" in steps:
         if backend == "edge":

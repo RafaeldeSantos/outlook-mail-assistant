@@ -36,19 +36,23 @@ piper:
       expressiveness: 0.86
       rhythm_variation: 0.95
       gain_db: 0.0
+    # Englisch analog: durchgehend Ryan, langsam und abgesenkt - der ruhige,
+    # dunkle Erzaehlton. pitch < 1 senkt die Tonhoehe, die Dauer bleibt gleich.
     narrator_en:
-      model: vits-piper-en_US-lessac-high       # weiblich, US, 22,05 kHz
+      model: vits-piper-en_US-ryan-high         # maennlich, US, 22,05 kHz
       speaker: 0
-      speed: 1.0
+      speed: 0.92
+      pitch: 0.93
       expressiveness: 0.72
       rhythm_variation: 0.85
       gain_db: 0.0
     voice_en:
-      model: vits-piper-en_US-ryan-high         # maennlich, US, 22,05 kHz
+      model: vits-piper-en_US-ryan-high
       speaker: 0
-      speed: 0.98
-      expressiveness: 0.78
-      rhythm_variation: 0.90
+      speed: 0.90
+      pitch: 0.93
+      expressiveness: 0.80
+      rhythm_variation: 0.92
       gain_db: 0.0
 
   # Alternativen zum Durchtauschen (gleiche Quelle, gleiches Namensschema):
