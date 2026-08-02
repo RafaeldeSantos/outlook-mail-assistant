@@ -1,0 +1,9 @@
+Kapitel 22. Scorecards.
+
+Measure actions, responsiveness, reciprocity and route quality.
+
+Abschnitt: Night scorecard.
+
+Messwert: Warm-up. 0: None. 1: Partial. 2: Completed. Ziel: 2. Messwert: Top target approached. 0: No. 1: Late. 2: Within 5 sec. Ziel: 2. Messwert: Responsive conversation. 0: Script/interview. 1: Mixed. 2: Follow-up + callback + relate. Ziel: 2. Messwert: Warmth / challenge. 0: Cold or approval seeking. 1: Mixed. 2: Warm edge calibrated. Ziel: 2. Messwert: Position changes. 0: 0. 1: 1. 2: 2+. Ziel: 2. Messwert: Reciprocity gates. 0: Guessed. 1: One signal. 2: Two current signals. Ziel: 2. Messwert: Kiss window. 0: Avoided. 1: Detected. 2: Acted/slowed correctly. Ziel: 2. Messwert: Route quality. 0: Complex. 1: Acceptable. 2: Shortest transparent route. Ziel: 2. Messwert: Tier-2 close. 0: Missed strong logistics block. 1: Vague. 2: Concrete day/time. Ziel: As needed. Messwert: Consent / exit. 0: Poor. 1: Mixed. 2: Clear and responsive. Ziel: 2.
+
+Abschnitt: Session log template.

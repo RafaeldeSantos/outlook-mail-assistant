@@ -1,0 +1,301 @@
+{
+ "title": "The Selective Operator - Rafael Edition",
+ "version": "1",
+ "tracks": [
+  {
+   "track": 1,
+   "code": "01",
+   "title": "Intro und Gebrauchsanweisung",
+   "file": "01_Intro_und_Gebrauchsanweisung.txt",
+   "characters": 807
+  },
+  {
+   "track": 2,
+   "code": "02",
+   "title": "Executive Profile",
+   "file": "02_Executive_Profile.txt",
+   "characters": 2719
+  },
+  {
+   "track": 3,
+   "code": "03",
+   "title": "Rules of the Game",
+   "file": "03_Rules_of_the_Game.txt",
+   "characters": 2712
+  },
+  {
+   "track": 4,
+   "code": "04",
+   "title": "Market Architecture",
+   "file": "04_Market_Architecture.txt",
+   "characters": 2161
+  },
+  {
+   "track": 5,
+   "code": "05",
+   "title": "State & Flow",
+   "file": "05_State_und_Flow.txt",
+   "characters": 2304
+  },
+  {
+   "track": 6,
+   "code": "06",
+   "title": "Selectivity Without Inaction",
+   "file": "06_Selectivity_Without_Inaction.txt",
+   "characters": 907
+  },
+  {
+   "track": 7,
+   "code": "07",
+   "title": "Solo Game",
+   "file": "07_Solo_Game.txt",
+   "characters": 519
+  },
+  {
+   "track": 8,
+   "code": "08",
+   "title": "Group Game",
+   "file": "08_Group_Game.txt",
+   "characters": 1084
+  },
+  {
+   "track": 9,
+   "code": "09",
+   "title": "Opening Systems",
+   "file": "09_Opening_Systems.txt",
+   "characters": 2164
+  },
+  {
+   "track": 10,
+   "code": "10",
+   "title": "Conversation Engine",
+   "file": "10_Conversation_Engine.txt",
+   "characters": 1039
+  },
+  {
+   "track": 11,
+   "code": "11",
+   "title": "Attraction Stack",
+   "file": "11_Attraction_Stack.txt",
+   "characters": 1017
+  },
+  {
+   "track": 12,
+   "code": "12",
+   "title": "Qualifying & Minimum Effective Connection",
+   "file": "12_Qualifying_und_Minimum_Effective_Connection.txt",
+   "characters": 1921
+  },
+  {
+   "track": 13,
+   "code": "13",
+   "title": "Escalation & Reciprocity Gates",
+   "file": "13_Escalation_und_Reciprocity_Gates.txt",
+   "characters": 1238
+  },
+  {
+   "track": 14,
+   "code": "14",
+   "title": "Frankfurt Playbook",
+   "file": "14_Frankfurt_Playbook.txt",
+   "characters": 745
+  },
+  {
+   "track": 15,
+   "code": "15",
+   "title": "Munich & Duesseldorf",
+   "file": "15_Munich_und_Duesseldorf.txt",
+   "characters": 781
+  },
+  {
+   "track": 16,
+   "code": "16",
+   "title": "International Premium Game",
+   "file": "16_International_Premium_Game.txt",
+   "characters": 867
+  },
+  {
+   "track": 17,
+   "code": "17",
+   "title": "Simple English Game",
+   "file": "17_Simple_English_Game.txt",
+   "characters": 668
+  },
+  {
+   "track": 18,
+   "code": "18",
+   "title": "Logistics Is Game",
+   "file": "18_Logistics_Is_Game.txt",
+   "characters": 1760
+  },
+  {
+   "track": 19,
+   "code": "19",
+   "title": "Friend Management",
+   "file": "19_Friend_Management.txt",
+   "characters": 1643
+  },
+  {
+   "track": 20,
+   "code": "20",
+   "title": "Failure Diagnostics",
+   "file": "20_Failure_Diagnostics.txt",
+   "characters": 2178
+  },
+  {
+   "track": 21,
+   "code": "21",
+   "title": "Follow-up After the Night",
+   "file": "21_Follow-up_After_the_Night.txt",
+   "characters": 649
+  },
+  {
+   "track": 22,
+   "code": "22",
+   "title": "90-Day Training System",
+   "file": "22_90-Day_Training_System.txt",
+   "characters": 1637
+  },
+  {
+   "track": 23,
+   "code": "23",
+   "title": "Scorecards",
+   "file": "23_Scorecards.txt",
+   "characters": 1010
+  },
+  {
+   "track": 24,
+   "code": "24",
+   "title": "Decision Trees",
+   "file": "24_Decision_Trees.txt",
+   "characters": 197
+  },
+  {
+   "track": 25,
+   "code": "25",
+   "title": "Line Library: Opening und Conversation",
+   "file": "25_Line_Library_Opening_und_Conversation.txt",
+   "characters": 3947
+  },
+  {
+   "track": 26,
+   "code": "26",
+   "title": "Line Library: Attraction und Qualifying",
+   "file": "26_Line_Library_Attraction_und_Qualifying.txt",
+   "characters": 2381
+  },
+  {
+   "track": 27,
+   "code": "27",
+   "title": "Line Library: Transition und Escalation",
+   "file": "27_Line_Library_Transition_und_Escalation.txt",
+   "characters": 2570
+  },
+  {
+   "track": 28,
+   "code": "28",
+   "title": "Line Library: Exit und Follow-up",
+   "file": "28_Line_Library_Exit_und_Follow-up.txt",
+   "characters": 1164
+  },
+  {
+   "track": 29,
+   "code": "29",
+   "title": "Line Library: English Lines",
+   "file": "29_Line_Library_English_Lines.txt",
+   "characters": 2902
+  },
+  {
+   "track": 30,
+   "code": "30",
+   "title": "Pocket Playbooks",
+   "file": "30_Pocket_Playbooks.txt",
+   "characters": 1520
+  },
+  {
+   "track": 31,
+   "code": "31",
+   "title": "Szenario-Playbooks, Teil 1",
+   "file": "31_Szenario-Playbooks_Teil_1.txt",
+   "characters": 5988
+  },
+  {
+   "track": 32,
+   "code": "32",
+   "title": "Szenario-Playbooks, Teil 2",
+   "file": "32_Szenario-Playbooks_Teil_2.txt",
+   "characters": 5297
+  },
+  {
+   "track": 33,
+   "code": "33",
+   "title": "Szenario-Playbooks, Teil 3",
+   "file": "33_Szenario-Playbooks_Teil_3.txt",
+   "characters": 4557
+  },
+  {
+   "track": 34,
+   "code": "34",
+   "title": "Szenario-Playbooks, Teil 4",
+   "file": "34_Szenario-Playbooks_Teil_4.txt",
+   "characters": 4619
+  },
+  {
+   "track": 35,
+   "code": "35",
+   "title": "Szenario-Playbooks, Teil 5",
+   "file": "35_Szenario-Playbooks_Teil_5.txt",
+   "characters": 4566
+  },
+  {
+   "track": 36,
+   "code": "36",
+   "title": "English Field Scripts, Teil 1",
+   "file": "36_English_Field_Scripts_Teil_1.txt",
+   "characters": 2348
+  },
+  {
+   "track": 37,
+   "code": "37",
+   "title": "English Field Scripts, Teil 2",
+   "file": "37_English_Field_Scripts_Teil_2.txt",
+   "characters": 2355
+  },
+  {
+   "track": 38,
+   "code": "38",
+   "title": "Field Drills, Teil 1",
+   "file": "38_Field_Drills_Teil_1.txt",
+   "characters": 2978
+  },
+  {
+   "track": 39,
+   "code": "39",
+   "title": "Field Drills, Teil 2",
+   "file": "39_Field_Drills_Teil_2.txt",
+   "characters": 2784
+  },
+  {
+   "track": 40,
+   "code": "40",
+   "title": "13-Week Field Workbook",
+   "file": "40_13-Week_Field_Workbook.txt",
+   "characters": 4695
+  },
+  {
+   "track": 41,
+   "code": "41",
+   "title": "Quick Reference Cards",
+   "file": "41_Quick_Reference_Cards.txt",
+   "characters": 1517
+  },
+  {
+   "track": 42,
+   "code": "42",
+   "title": "Abschluss",
+   "file": "42_Abschluss.txt",
+   "characters": 501
+  }
+ ],
+ "total_characters": 89416
+}

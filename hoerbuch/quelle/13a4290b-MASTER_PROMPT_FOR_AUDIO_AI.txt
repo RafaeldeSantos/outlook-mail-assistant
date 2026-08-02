@@ -1,0 +1,39 @@
+MASTER-PROMPT FÜR EINE AUDIO- ODER TTS-KI
+
+Aufgabe:
+Produziere aus den beigefügten Kapiteldateien ein professionelles, realistisches deutsch-englisches Hörbuch. Verwende genau eine konsistente männliche Stimme für alle Kapitel. Die Stimme soll wie ein echter, souveräner Mann zwischen 35 und 45 Jahren klingen: ruhig, gepflegt, intelligent, conversational und selbstbewusst. Keine Radiowerbung, kein Motivationscoach, keine übertriebene Dominanz und keine künstlich tiefe Trailer-Stimme.
+
+Sprachen:
+Der Haupttext ist Deutsch. Englische Lines werden in natürlichem, klarem internationalem Englisch gesprochen. Wechsle die Sprache flüssig, ohne die Sprecheridentität oder Lautstärke zu verändern. Deutsche Sätze dürfen keinen künstlichen englischen Akzent bekommen. Englische Sätze dürfen nicht deutsch ausgesprochen werden.
+
+Vortragsstil:
+- Natürliches Hochdeutsch, leicht conversational.
+- Tempo etwa 0,95 bis 0,98 der normalen Sprechgeschwindigkeit.
+- Kurze Pause nach Kapitelüberschriften: etwa 0,8 Sekunden.
+- Zwischen Absätzen etwa 0,45 bis 0,65 Sekunden.
+- Vor und nach Beispiel-Lines leicht langsamer und mit kleiner Pause.
+- Keine Tags, Dateinamen, Markdown-Zeichen oder Produktionshinweise vorlesen.
+- Keine zusätzlichen Inhalte erfinden.
+- Keine Sätze kürzen oder umformulieren, sofern die Aussprache nicht technisch unmöglich ist.
+- Zitate nicht schauspielerisch übertreiben; nur minimal spielerischer als die Erklärpassagen.
+- Aufzählungen als natürliche gesprochene Sequenz lesen, nicht wie eine Tabelle.
+
+Audioqualität:
+- Jedes Kapitel als eigene Datei.
+- MP3 mit mindestens 192 kbps und 44,1 oder 48 Kilohertz.
+- Einheitliche Lautheit, Ziel ungefähr minus 16 LUFS für Stereo oder minus 19 LUFS für Mono.
+- True Peak maximal minus 1 dBTP.
+- Kein Hintergrundbeat, keine Soundeffekte, kein Hall.
+- 150 bis 250 Millisekunden Fade-in und Fade-out.
+- Metadaten: Album „The Selective Operator – Rafael Edition“, fortlaufende Tracknummern, jeweiliger Kapiteltitel.
+
+Qualitätskontrolle:
+1. Prüfe, ob jede Datei vollständig ist und nicht mitten im Satz endet.
+2. Prüfe alle Wechsel Deutsch zu Englisch und zurück.
+3. Prüfe die Aussprache aus dem Ausspracheleitfaden.
+4. Prüfe auf doppelte Sätze, ausgelassene Absätze, Roboterpausen und Lautstärkesprünge.
+5. Erzeuge fehlerhafte Passagen neu, bevor du das Endprodukt ausgibst.
+6. Gib zusätzlich eine M4B-Gesamtdatei mit eingebetteten Kapiteln aus, sofern unterstützt.
+
+Ausgabe:
+Ein Ordner mit allen nummerierten MP3-Kapiteln, einer Playlist, einem Cover, einer Trackliste und optional einer M4B-Datei. Anschließend alles als ZIP paketieren.

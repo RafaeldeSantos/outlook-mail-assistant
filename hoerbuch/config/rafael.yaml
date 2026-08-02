@@ -1,0 +1,89 @@
+# The Selective Operator - Rafael Edition
+#
+# Werte nach MASTER_PROMPT_FOR_AUDIO_AI.txt und VOICE_AND_PRONUNCIATION_GUIDE.txt.
+
+backend: piper
+
+album: The Selective Operator - Rafael Edition
+artist: Rafael Edition
+
+piper:
+  base_url: https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models
+  sample_rate: 24000
+  cast:
+    # Deutsch: Thorsten, ruhig und souveraen, Tempo 0.96 wie vorgegeben
+    # (Master-Prompt: 0,95 bis 0,98 der normalen Sprechgeschwindigkeit).
+    narrator_de:
+      model: vits-piper-de_DE-thorsten-high
+      speaker: 0
+      speed: 0.96
+      expressiveness: 0.80
+      rhythm_variation: 0.92
+      gain_db: 0.0
+    # Zitierte Lines: gleiche Stimme, nur minimal langsamer und etwas
+    # spielerischer - "nur minimal spielerischer als die Erklaerpassagen".
+    voice_de:
+      model: vits-piper-de_DE-thorsten-high
+      speaker: 0
+      speed: 0.93
+      expressiveness: 0.86
+      rhythm_variation: 0.95
+      gain_db: 0.0
+    # Englisch: Ryan, abgesenkt, damit der Sprecherwechsel nicht als Bruch
+    # wirkt. Piper hat keine Stimme, die beide Sprachen nativ traegt.
+    narrator_en:
+      model: vits-piper-en_US-ryan-high
+      speaker: 0
+      speed: 0.94
+      pitch: 0.93
+      expressiveness: 0.74
+      rhythm_variation: 0.86
+      gain_db: 0.0
+    voice_en:
+      model: vits-piper-en_US-ryan-high
+      speaker: 0
+      speed: 0.92
+      pitch: 0.93
+      expressiveness: 0.80
+      rhythm_variation: 0.92
+      gain_db: 0.0
+
+edge:
+  sample_rate: 24000
+  cast:
+    narrator_de: {model: de-DE-ConradNeural,              rate: "-6%", pitch: "-6Hz"}
+    voice_de:    {model: de-DE-ConradNeural,              rate: "-9%", pitch: "-6Hz"}
+    narrator_en: {model: de-DE-FlorianMultilingualNeural, rate: "-6%", pitch: "-4Hz"}
+    voice_en:    {model: de-DE-FlorianMultilingualNeural, rate: "-9%", pitch: "-4Hz"}
+
+# Pausen nach dem Ausspracheleitfaden (Millisekunden).
+pauses:
+  title: 1200
+  subtitle: 700
+  kicker: 350
+  chapter: 800      # nach der Kapitelueberschrift
+  heading: 600      # nach einer Kernregel
+  subheading: 550
+  para: 550         # zwischen Absaetzen: 0,45 bis 0,65 s
+  item: 400
+  pair: 400
+  line: 700         # zwischen mehreren Beispiel-Lines
+  note: 600
+pauses_before:
+  chapter: 900
+  heading: 500
+  subheading: 300
+  line: 350         # vor einer Beispiel-Line leicht Luft holen
+
+trim_repeated_carriers: true
+
+# Audioqualitaet nach Master-Prompt: mono, minus 19 LUFS, True Peak minus 1 dBTP,
+# MP3 mit mindestens 192 kbps bei 44,1 kHz, 150 bis 250 ms Fades.
+mastering:
+  lufs: -19.0
+  true_peak: -1.0
+  lra: 11.0
+  mp3_bitrate: 192k
+  mp3_samplerate: 44100
+  channels: 1
+  fade_ms: 200

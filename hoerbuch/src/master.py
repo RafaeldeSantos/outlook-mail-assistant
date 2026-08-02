@@ -52,10 +52,17 @@ def normalize_chapter(src: Path, dst: Path, target: dict, bitrate: str,
                      f":offset={stats.get('target_offset', 0)}:linear=true")
     chain = f"highpass=f=65,{loudnorm}"
 
+    fade = float(target.get("fade_ms", 0)) / 1000.0
+    if fade > 0:
+        total = duration(src)
+        chain += (f",afade=t=in:st=0:d={fade:.3f}"
+                  f",afade=t=out:st={max(0.0, total - fade):.3f}:d={fade:.3f}")
+
+    rate = str(target.get("mp3_samplerate", 44100))
     cmd = [FFMPEG, "-hide_banner", "-loglevel", "error", "-y", "-i", str(src)]
     if cover:
         cmd += ["-i", str(cover)]
-    cmd += ["-af", chain, "-ac", str(channels), "-ar", "44100",
+    cmd += ["-af", chain, "-ac", str(channels), "-ar", rate,
             "-c:a", "libmp3lame", "-b:a", bitrate]
     if cover:
         cmd += ["-map", "0:a", "-map", "1:v", "-c:v", "copy", "-id3v2_version", "3",
@@ -144,8 +151,8 @@ def main(script_path: str, cfg_path: str, wav_dir: str, out_dir: str,
     script = json.loads(Path(script_path).read_text(encoding="utf-8"))
     cfg = yaml.safe_load(Path(cfg_path).read_text(encoding="utf-8"))
     m = cfg["mastering"]
-    album = cfg.get("album", "The High-End Wingmen")
-    artist = cfg.get("artist", "High-End Wingmen")
+    album = cfg.get("album", "Hoerbuch")
+    artist = cfg.get("artist", album)
 
     wav_dir, out_dir = Path(wav_dir), Path(out_dir)
     mp3_dir = out_dir / "mp3"
@@ -171,6 +178,13 @@ def main(script_path: str, cfg_path: str, wav_dir: str, out_dir: str,
 
     if produced:
         write_overview(produced, out_dir / "Kapiteluebersicht.txt", album)
+        # M3U-Playlist, damit die Reihenfolge auch ohne Tags stimmt
+        playlist = ["#EXTM3U"]
+        for number, title, path in produced:
+            playlist.append(f"#EXTINF:{int(duration(path))},{number:02d} - {title}")
+            playlist.append(f"mp3/{path.name}")
+        (out_dir / f"{safe(album)}.m3u").write_text(
+            "\n".join(playlist) + "\n", encoding="utf-8")
         m4b = out_dir / f"{safe(album)}_Hoerbuch.m4b"
         build_m4b(produced, m4b,
                   {"title": album, "artist": artist, "album": album,

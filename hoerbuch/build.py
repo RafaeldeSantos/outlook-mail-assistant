@@ -18,10 +18,10 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "src"
-CFG = ROOT / "config" / "voices.yaml"
-OUT = ROOT / "out"
+CFG_DEFAULT = ROOT / "config" / "voices.yaml"
+OUT_DEFAULT = ROOT / "out"
 PACK = ROOT / "quelle" / "pack"
-COVER = PACK / "06_Cover" / "cover.jpg"
+
 
 STEPS = ("script", "tts", "master")
 
@@ -44,13 +44,18 @@ def main() -> None:
                     help="Prozesse fuer die Offline-Synthese")
     ap.add_argument("--pack", default=str(PACK),
                     help="Quellordner mit Kapitel-Skripten (siehe src/laden.py)")
+    ap.add_argument("--config", default=str(CFG_DEFAULT),
+                    help="Konfiguration mit Besetzung, Pausen und Mastering-Zielen")
+    ap.add_argument("--out", default=str(OUT_DEFAULT), help="Ausgabeordner")
     args = ap.parse_args()
     pack = Path(args.pack)
+    CFG = Path(args.config)
+    OUT = Path(args.out)
 
     cfg = yaml.safe_load(CFG.read_text(encoding="utf-8"))
     backend = args.backend or cfg.get("backend", "piper")
     steps = args.step or list(STEPS)
-    OUT.mkdir(exist_ok=True)
+    OUT.mkdir(parents=True, exist_ok=True)
 
     if "script" in steps:
         sh([SRC / "script_pack.py", pack, CFG, OUT / "script.json"])
@@ -68,8 +73,10 @@ def main() -> None:
         sh(cmd)
 
     if "master" in steps:
+        cover = next((c for c in (pack / "cover.jpg", PACK / "06_Cover" / "cover.jpg")
+                      if c.exists()), None)
         sh([SRC / "master.py", OUT / "script.json", CFG, OUT / "wav", OUT,
-            COVER if COVER.exists() else ""])
+            cover or ""])
 
     print("\nFertig. Ergebnisse in", OUT)
 

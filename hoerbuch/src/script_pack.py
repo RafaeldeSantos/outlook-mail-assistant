@@ -55,16 +55,34 @@ DETECTOR = (
 QUOTE_RE = re.compile(r'[„“”"“„]([^„“”"“„]{2,400}?)[“”"“”]')
 
 # Traegersaetze vor einer Feldzeile.
+# Labels, nach denen normaler Erzaehltext folgt.
 CARRIERS = (
-    r"Die Line lautet|Eine m[oö]gliche Line(?: ist)?|Die Kernaussage|"
-    r"Der Einstieg|Der [UÜ]bergang oder Close|Die Interaktion|Der Kontext|"
-    r"Das Ziel|Der Hauptfehler|Die Korrektur oder der Exit|Der Ablauf|Line"
+    r"Die Kernaussage|Der Einstieg|Der [UÜ]bergang oder Close|Die Interaktion|"
+    r"Der Kontext|Kontext|Das Ziel|Ziel|Der Hauptfehler|Hauptfehler|"
+    r"Die Korrektur oder der Exit|Saubere Korrektur oder Exit|Der Ablauf|Ablauf|"
+    r"Abschnitt|Kategorie|Grundsatz|Mission|Erfolgsstandard|Debrief|Phase|"
+    r"Woran du Interesse erkennst|Dein n[aä]chster Schritt|Messpunkt|Titel|"
+    r"Situation|Am Ende der Woche notierst du"
 )
-CARRIER_RE = re.compile(rf"^(?:{CARRIERS})\s*[:.]?\s*$", re.IGNORECASE)
+# Labels, nach denen eine gesprochene Beispielzeile folgt - die bekommt die
+# Feldstimme, auch wenn im Manuskript keine Anfuehrungszeichen stehen.
+LINE_CARRIERS = (
+    r"Die Line lautet|Eine m[oö]gliche Line(?: ist)?|M[oö]gliche Formulierungen|"
+    r"Formulierung|N[aä]chster Baustein|Beispiel|Line"
+)
+ALL_CARRIERS = f"{CARRIERS}|{LINE_CARRIERS}"
+
+CARRIER_RE = re.compile(rf"^(?:{ALL_CARRIERS})\s*[:.]?\s*$", re.IGNORECASE)
 
 # Deutscher Traegersatz mit direkt anschliessendem - oft englischem - Inhalt.
 # Ohne Trennung liest die englische Erzaehlstimme "Die Interaktion:" mit.
 CARRIER_LEAD_RE = re.compile(rf"^({CARRIERS})\s*:\s*(?=\S)(.+)$", re.IGNORECASE | re.S)
+LINE_LEAD_RE = re.compile(rf"^({LINE_CARRIERS})\s*[.:]\s*(?=\S)(.+)$",
+                          re.IGNORECASE | re.S)
+
+# Regieanweisung im Manuskript: soll gehoert, nicht gelesen werden.
+REGIE_RE = re.compile(r"^(?:Pause|Kurze Pause|Beat)\.?$", re.IGNORECASE)
+REGIE_PAUSE_MS = 900
 
 DE_MARKERS = {
     "und", "nicht", "bei", "dann", "wenn", "oder", "mit", "für", "ein", "eine",
@@ -159,6 +177,25 @@ def split_by_language(text: str, default: str = "de") -> list[tuple[str, str]]:
 LETTER = r"A-Za-zÄÖÜäöüß0-9"
 
 
+MAX_SEGMENT_CHARS = 380
+
+
+def split_long(text: str, limit: int = MAX_SEGMENT_CHARS) -> list[str]:
+    """Ueberlange Absaetze an Satzgrenzen in vorlesbare Stuecke teilen."""
+    if len(text) <= limit:
+        return [text]
+    stuecke, aktuell = [], ""
+    for satz in sentences(text):
+        if aktuell and len(aktuell) + len(satz) + 1 > limit:
+            stuecke.append(aktuell)
+            aktuell = satz
+        else:
+            aktuell = f"{aktuell} {satz}".strip()
+    if aktuell:
+        stuecke.append(aktuell)
+    return stuecke
+
+
 def apply_lexicon(text: str, lexicon: dict[str, str]) -> str:
     for grapheme, alias in lexicon.items():
         text = re.sub(rf"(?<![{LETTER}]){re.escape(grapheme)}(?![{LETTER}])",
@@ -242,6 +279,14 @@ def build(pack_dir: str, cfg_path: str, out_path: str) -> None:
                 if not chunk:
                     continue
 
+                if kind == "narration" and REGIE_RE.match(chunk.strip()):
+                    # "Pause." nicht vorlesen, sondern die vorige Zeile
+                    # entsprechend laenger stehen lassen.
+                    if segments:
+                        segments[-1]["pause_after"] = max(
+                            segments[-1]["pause_after"], REGIE_PAUSE_MS)
+                    continue
+
                 if kind == "narration":
                     # Traegersatz vor einer Zeile ggf. weglassen
                     stripped = chunk.rstrip(" :.")
@@ -262,6 +307,17 @@ def build(pack_dir: str, cfg_path: str, out_path: str) -> None:
                     m = CARRIER_LEAD_RE.match(chunk)
                     if m:
                         lead, chunk = m.group(1).strip() + ":", m.group(2).strip()
+                    else:
+                        m = LINE_LEAD_RE.match(chunk)
+                        if m:
+                            # "Beispiel. Du gibst mir ..." - das Label bleibt
+                            # Erzaehlung, der Rest wird zur gesprochenen Zeile.
+                            lead = m.group(1).strip() + "."
+                            chunk, kind, block = m.group(2).strip(), "line", "line"
+                            if trim_carriers and lead.rstrip(".:") == last_carrier:
+                                lead = None
+                            else:
+                                last_carrier = m.group(1).strip()
 
                 if lead:
                     spoken_lead = normalize(apply_lexicon(lead, lexicon), "de")
@@ -278,11 +334,22 @@ def build(pack_dir: str, cfg_path: str, out_path: str) -> None:
                 # komplett in einer Sprache landen.
                 if kind == "line":
                     runs = [(detect_lang(chunk), chunk)]
-                elif is_heading or FRAME_RE.match(chunk):
+                elif is_heading or FRAME_RE.match(chunk) or CARRIER_RE.match(chunk):
+                    # Kapitelansagen und blosse Label bleiben immer deutsch -
+                    # sie sind der Rahmen des Buches, nicht sein Inhalt.
                     runs = [("de", chunk)]
                 else:
-                    runs = split_by_language(chunk, last_lang)
+                    # Jeder Absatz startet wieder auf Deutsch. Der Haupttext ist
+                    # deutsch; wer die Sprache des Vorabsatzes erbt, zieht sonst
+                    # nach einem englischen Block ganze deutsche Absaetze mit.
+                    runs = split_by_language(chunk, "de")
                     last_lang = runs[-1][0] if runs else last_lang
+
+                # Sehr lange Absaetze in hoerbare Haeppchen teilen, damit
+                # zwischendurch Luft bleibt statt eines Dauerlaufs.
+                runs = [(lang, teil)
+                        for lang, run in runs
+                        for teil in split_long(run)]
 
                 for lang, run in runs:
                     role = ("voice" if kind == "line" else "narrator") + "_" + lang
